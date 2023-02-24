@@ -154,7 +154,7 @@ function parseCpuStates(line: string): CpuStates {
 
     // @ts-ignore
     return Object.fromEntries(tokens
-        .map(([ ,, value, key ]) => [key, Number(value)]))
+        .map(([, , value, key]) => [key, Number(value)]))
 }
 
 if (import.meta.vitest) {
@@ -293,22 +293,216 @@ function parseSummaryDisplay(lines: string[]): SummaryDisplay {
         taskStates: parseTaskStates(lines[1]),
         cpuStates: parseCpuStates(lines[2]),
         physicalMemory: parsePhysicalMemory(lines[3]),
-        virtualMemory: parseVirtualMemory(lines[4]) ,
+        virtualMemory: parseVirtualMemory(lines[4]),
     }
 }
 
-interface FieldsAndColumns {
+interface ColumnsHeader {
+    title: string,
+    raw: string,
+    start: number,
+    end: number
+}
+
+function parseColumnsHeader(line: string): ColumnsHeader[] {
+    const matcher = /(?:(?<=[^\s])\s(?=[^\s])[^\s]+\s+(?=\s)|(\s+[^\s]+))/gm
+    const tokens = line.match(matcher)
+
+    if (!tokens) {
+        throw new Error("unkown input string")
+    }
+
+    return tokens
+        .reduce((acc: ColumnsHeader[], token: string, i) => {
+            const raw = token
+            const title = raw.trim()
+            const start = (acc[i - 1] ?? { end: 0 }).end
+            const end = start + token.length
+
+            return acc.push({
+                raw,
+                title,
+                start,
+                end
+            }), acc
+        }, [])
+}
+
+if (import.meta.vitest) {
+    const { describe, it, expect } = import.meta.vitest
+
+    describe("parseColumnsHeader", () => {
+        it("can parse correctly with normal input", () => {
+            const input = "  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                  P"
+            const expected = [
+                "  PID",
+                " USER     ",
+                " PR",
+                "  NI",
+                "    VIRT",
+                "    RES",
+                "    SHR",
+                " S ",
+                " %CPU",
+                "  %MEM",
+                "     TIME+",
+                " COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                 ",
+                " P"
+            ]
+
+            const actual = parseColumnsHeader(input)
+                .map(({ start, end }) => {
+                    return input.slice(start, end)
+                })
+
+            expect(actual).toStrictEqual(expected)
+        })
+    })
+}
+
+interface FieldsValues {
     [field: string]: string
 }
 
-function parseTopInfoBlock(input: string) {
-    const SUMMARY_DISPLAY_LINE_COUNT = 5
+function parseFieldsValues(input: FieldAndColumnsDisplayType): FieldsValues[] {
+    const header = parseColumnsHeader(input.header)
 
+    return input.fields.map(line => {
+        return Object.fromEntries(
+            header.map(h => {
+                const key = h.title
+                const value = line.slice(h.start, h.end).trim()
+
+                return [ key, value ]
+            })
+        )
+    })
+}
+
+if (import.meta.vitest) {
+    const { describe, it, expect } = import.meta.vitest
+
+    describe("parseFieldsValues", () => {
+        it("can parse correctly with normal input", () => {
+            const input: FieldAndColumnsDisplayType = {
+                header: "  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                  P",
+                fields: [
+                    " 8253 tim       20   0   23.8g 235884  37740 S   6.7   3.9   0:03.07 /home/tim/.nvm/versions/node/v18.12.0/bin/node --experimental-loader=file:///home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/runners/node/hooks.mjs /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/server.js runner 0 40475 vitest@0.14.0,autoDetected  /home/tim/learn/linux-top-parser/node_modules /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/proje+  2",
+                    "    1 root      20   0    1804   1192   1104 S   0.0   0.0   0:00.02 /init                                                                                                                                                                                                                                                                                                                                                                                                                                                    0"
+                ]
+            }
+
+            const expected: FieldsValues[] = [
+                {
+                  PID: "8253",
+                  USER: "tim",
+                  PR: "20",
+                  NI: "0",
+                  VIRT: "23.8g",
+                  RES: "235884",
+                  SHR: "37740",
+                  S: "S",
+                  "%CPU": "6.7",
+                  "%MEM": "3.9",
+                  "TIME+": "0:03.07",
+                  COMMAND: "/home/tim/.nvm/versions/node/v18.12.0/bin/node --experimental-loader=file:///home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/runners/node/hooks.mjs /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/server.js runner 0 40475 vitest@0.14.0,autoDetected  /home/tim/learn/linux-top-parser/node_modules /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/proje+",
+                  P: "2"
+                },
+                {
+                  PID: "1",
+                  USER: "root",
+                  PR: "20",
+                  NI: "0",
+                  VIRT: "1804",
+                  RES: "1192",
+                  SHR: "1104",
+                  S: "S",
+                  "%CPU": "0.0",
+                  "%MEM": "0.0",
+                  "TIME+": "0:00.02",
+                  COMMAND: "/init",
+                  P: "0"
+                }
+            ]
+
+            expect(parseFieldsValues(input)).toStrictEqual(expected)
+        })
+    })
+}
+
+interface TopInfoDisplayType {
+    summary: string[]
+    fieldAndColumns: FieldAndColumnsDisplayType
+}
+
+interface FieldAndColumnsDisplayType {
+    header: string,
+    fields: string[]
+}
+
+const SUMMARY_DISPLAY_LINE_COUNT = 5
+
+function convertIntoTopInfoDisplayType(input: string): TopInfoDisplayType {
     const lines = input.split("\n")
-    const summaryDisplay = parseSummaryDisplay(lines.splice(0, SUMMARY_DISPLAY_LINE_COUNT))
 
     return {
-        summaryDisplay
+        summary: lines.slice(0, SUMMARY_DISPLAY_LINE_COUNT),
+        fieldAndColumns: {
+            header: lines.slice(SUMMARY_DISPLAY_LINE_COUNT + 1).shift() || "",
+            fields: lines.slice(SUMMARY_DISPLAY_LINE_COUNT + 2)
+        }
+    }
+}
+
+if (import.meta.vitest) {
+    const { describe, it, expect } = import.meta.vitest
+
+    describe("convertIntoTopInfoDisplayType", () => {
+        it("can parse correctly with normal input", () => {
+            const input = `
+top - 15:29:38 up 15:54,  0 users,  load average: 0.14, 0.07, 0.06
+Tasks:  60 total,   1 running,  39 sleeping,   0 stopped,  20 zombie
+%Cpu(s):  0.4 us,  0.8 sy,  0.1 ni, 98.4 id,  0.2 wa,  0.3 hi,  0.4 si,  0.0 st
+MiB Mem :   7947.3 total,    408.6 free,   4257.3 used,   3281.4 buff/cache
+MiB Swap:   2048.0 total,   2048.0 free,      0.0 used.   3392.8 avail Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                  P
+ 8253 tim       20   0   23.8g 235884  37740 S   6.7   3.9   0:03.07 /home/tim/.nvm/versions/node/v18.12.0/bin/node --experimental-loader=file:///home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/runners/node/hooks.mjs /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/server.js runner 0 40475 vitest@0.14.0,autoDetected  /home/tim/learn/linux-top-parser/node_modules /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/proje+  2
+`
+
+            const expected: TopInfoDisplayType = {
+                summary: [
+                    "top - 15:29:38 up 15:54,  0 users,  load average: 0.14, 0.07, 0.06",
+                    "Tasks:  60 total,   1 running,  39 sleeping,   0 stopped,  20 zombie",
+                    "%Cpu(s):  0.4 us,  0.8 sy,  0.1 ni, 98.4 id,  0.2 wa,  0.3 hi,  0.4 si,  0.0 st",
+                    "MiB Mem :   7947.3 total,    408.6 free,   4257.3 used,   3281.4 buff/cache",
+                    "MiB Swap:   2048.0 total,   2048.0 free,      0.0 used.   3392.8 avail Mem",
+                ],
+                fieldAndColumns: {
+                    header: "  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                  P",
+                    fields: [
+                        " 8253 tim       20   0   23.8g 235884  37740 S   6.7   3.9   0:03.07 /home/tim/.nvm/versions/node/v18.12.0/bin/node --experimental-loader=file:///home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/runners/node/hooks.mjs /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/server.js runner 0 40475 vitest@0.14.0,autoDetected  /home/tim/learn/linux-top-parser/node_modules /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/proje+  2",
+                        ""
+                    ]
+                }
+            }
+
+            expect(convertIntoTopInfoDisplayType(input.slice(1))).toStrictEqual(expected)
+        })
+    })
+}
+
+export interface TopInfo {
+    summaryDisplay: SummaryDisplay,
+    fieldValues: FieldsValues[]
+}
+
+function parseTopInfoBlock(input: string): TopInfo {
+    const topInfoDisplayType = convertIntoTopInfoDisplayType(input)
+
+    return {
+        summaryDisplay: parseSummaryDisplay(topInfoDisplayType.summary),
+        fieldValues: parseFieldsValues(topInfoDisplayType.fieldAndColumns)
     }
 }
 
@@ -348,7 +542,7 @@ Tasks:  60 total,   1 running,  39 sleeping,   0 stopped,  20 zombie
  * @throws Will throw an error if the input is invalid format
  * @returns An object that contains all the top information
  */
-export function parseTopInfo(input: string) {
+export function parseTopInfo(input: string): TopInfo[] {
     if (input.length === 0) {
         throw new Error("Empty string")
     }
