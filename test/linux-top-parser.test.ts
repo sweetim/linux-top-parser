@@ -2,8 +2,10 @@ import { describe, expect, it } from "vitest"
 import { readFileSync } from "fs"
 import { resolve } from "path"
 
-import { parseTopInfo, TopInfo } from "../src"
 import { parse } from "date-fns"
+
+import { parseTopInfo } from "../src"
+import { TopInfo } from "../src/parser"
 
 const SINGLE_DATA_FILE_NAME = "single.txt"
 const MULTI_DATA_FILE_NAME = "multi.txt"
