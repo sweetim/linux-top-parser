@@ -301,6 +301,47 @@ interface FieldsAndColumns {
     [field: string]: string
 }
 
+function parseTopInfoBlock(input: string) {
+    const SUMMARY_DISPLAY_LINE_COUNT = 5
+
+    const lines = input.split("\n")
+    const summaryDisplay = parseSummaryDisplay(lines.splice(0, SUMMARY_DISPLAY_LINE_COUNT))
+
+    return {
+        summaryDisplay
+    }
+}
+
+function splitTopInfoToMultipleBlocks(input: string): string[] {
+    const matcher = /^(top)(.*(?:\n(?!top).*)*)/gm
+    return input.match(matcher) || []
+}
+
+if (import.meta.vitest) {
+    const { describe, it, expect } = import.meta.vitest
+
+    describe("convertTopInfoToMultipleBlocks", () => {
+        it("can parse correctly with normal input", () => {
+            const input = `
+top - 15:29:37 up 15:54,  0 users,  load average: 0.14, 0.07, 0.06
+Tasks:  60 total,   1 running,  39 sleeping,   0 stopped,  20 zombie
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                  P
+   8253 tim       20   0   23.8g 235884  37740 S   6.7   2.9   0:03.07 /home/tim/.nvm/versions/node/v18.12.0/bin/node --experimental-loader=file:///home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/runners/node/hooks.mjs /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/server.js runner 0 40475 vitest@0.14.0,autoDetected  /home/tim/learn/linux-top-parser/node_modules /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/proje+  2
+
+top - 15:29:37 up 15:54,  0 users,  load average: 0.14, 0.07, 0.06
+Tasks:  60 total,   1 running,  39 sleeping,   0 stopped,  20 zombie
+
+    PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                  P
+   8253 tim       20   0   23.8g 235884  37740 S   6.7   2.9   0:03.07 /home/tim/.nvm/versions/node/v18.12.0/bin/node --experimental-loader=file:///home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/runners/node/hooks.mjs /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/server.js runner 0 40475 vitest@0.14.0,autoDetected  /home/tim/learn/linux-top-parser/node_modules /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/proje+  2
+      1 root      20   0    1804   1192   1104 S   0.0   0.0   0:00.02 /init                                                                                                                                                                                                                                                                                                                                                                                                                                                    0
+`
+
+            expect(splitTopInfoToMultipleBlocks(input).length).toBe(2)
+        })
+    })
+}
+
 /**
  * Will parse the output of top linux command into an object
  * @param {string} input - the text block that contains the top output
@@ -308,14 +349,10 @@ interface FieldsAndColumns {
  * @returns An object that contains all the top information
  */
 export function parseTopInfo(input: string) {
-    const SUMMARY_DISPLAY_LINE_COUNT = 5
-
-    const lines = input.split("\n")
-    const totalLinesLength = lines.length
-
-    const summaryDisplay = parseSummaryDisplay(lines.splice(0, SUMMARY_DISPLAY_LINE_COUNT))
-
-    return {
-        summaryDisplay
+    if (input.length === 0) {
+        throw new Error("Empty string")
     }
+
+    return splitTopInfoToMultipleBlocks(input)
+        .map(parseTopInfoBlock)
 }
