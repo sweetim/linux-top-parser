@@ -145,23 +145,16 @@ interface CpuStates {
 }
 
 function parseCpuStates(line: string): CpuStates {
-    const matcher = /%Cpu\(s\):\s+([\d|.]+)\s+us,\s+([\d|.]+)\s+sy,\s+([\d|.]+)\s+ni,\s+([\d|.]+)\s+id,\s+([\d|.]+)\s+wa,\s+([\d|.]+)\s+hi,\s+([\d|.]+)\s+si,\s+([\d|.]+)\s+st/;
-    const tokens = line.match(matcher);
+    const matcher = /((\d+.\d+)\s+([^,]+))/gm
+    const tokens = Array.from(line.matchAll(matcher))
 
-    if (!tokens) {
+    if (tokens.length === 0) {
         throw new Error("Invalid string format")
     }
 
-    return {
-        us: Number(tokens[1]),
-        sy: Number(tokens[2]),
-        ni: Number(tokens[3]),
-        id: Number(tokens[4]),
-        wa: Number(tokens[5]),
-        hi: Number(tokens[6]),
-        si: Number(tokens[7]),
-        st: Number(tokens[8]),
-    };
+    // @ts-ignore
+    return Object.fromEntries(tokens
+        .map(([ ,, value, key ]) => [key, Number(value)]))
 }
 
 if (import.meta.vitest) {
@@ -232,7 +225,7 @@ if (import.meta.vitest) {
             expect(parsePhysicalMemory(input)).toStrictEqual(expected)
         })
 
-        it("will return null when received empty input", () => {
+        it("will throw error when received empty input", () => {
             const input = ""
             expect(() => parsePhysicalMemory(input)).toThrowError()
         })
@@ -279,7 +272,7 @@ if (import.meta.vitest) {
             expect(parseVirtualMemory(input)).toStrictEqual(expected)
         })
 
-        it("will return null when received empty input", () => {
+        it("will throw error when received empty input", () => {
             const input = ""
             expect(() => parseVirtualMemory(input)).toThrowError()
         })
@@ -294,13 +287,13 @@ interface SummaryDisplay {
     virtualMemory: VirtualMemory
 }
 
-function parseSummaryDisplay(input: string[]): SummaryDisplay {
+function parseSummaryDisplay(lines: string[]): SummaryDisplay {
     return {
-        upTimeAndLoadAverage: parseUpTimeAndLoadAverage(input[0]),
-        taskStates: parseTaskStates(input[1]),
-        cpuStates: parseCpuStates(input[2]),
-        physicalMemory: parsePhysicalMemory(input[3]),
-        virtualMemory: parseVirtualMemory(input[4]) ,
+        upTimeAndLoadAverage: parseUpTimeAndLoadAverage(lines[0]),
+        taskStates: parseTaskStates(lines[1]),
+        cpuStates: parseCpuStates(lines[2]),
+        physicalMemory: parsePhysicalMemory(lines[3]),
+        virtualMemory: parseVirtualMemory(lines[4]) ,
     }
 }
 
@@ -308,6 +301,12 @@ interface FieldsAndColumns {
     [field: string]: string
 }
 
+/**
+ * Will parse the output of top linux command into an object
+ * @param {string} input - the text block that contains the top output
+ * @throws Will throw an error if the input is invalid format
+ * @returns An object that contains all the top information
+ */
 export function parseTopInfo(input: string) {
     const SUMMARY_DISPLAY_LINE_COUNT = 5
 
