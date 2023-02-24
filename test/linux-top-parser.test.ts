@@ -291,21 +291,6 @@ describe("parseTopInfo", () => {
                         COMMAND: "/home/tim/.vscode-server/bin/441438abd1ac652551dbe4d408dfcec8a499b8bf/node /home/tim/.vscode-server/bin/441438abd1ac652551dbe4d408dfcec8a499b8bf/out/bootstrap-fork --type=fileWatcher",
                         P: "4"
                     },
-                    {
-                        PID: "",
-                        USER: "",
-                        PR: "",
-                        NI: "",
-                        VIRT: "",
-                        RES: "",
-                        SHR: "",
-                        S: "",
-                        "%CPU": "",
-                        "%MEM": "",
-                        "TIME+": "",
-                        COMMAND: "",
-                        P: ""
-                    }
                 ]
             },
             {
@@ -439,21 +424,6 @@ describe("parseTopInfo", () => {
                         COMMAND: "/home/tim/.vscode-server/bin/441438abd1ac652551dbe4d408dfcec8a499b8bf/node /home/tim/.vscode-server/bin/441438abd1ac652551dbe4d408dfcec8a499b8bf/out/bootstrap-fork --type=fileWatcher",
                         P: "4"
                     },
-                    {
-                        PID: "",
-                        USER: "",
-                        PR: "",
-                        NI: "",
-                        VIRT: "",
-                        RES: "",
-                        SHR: "",
-                        S: "",
-                        "%CPU": "",
-                        "%MEM": "",
-                        "TIME+": "",
-                        COMMAND: "",
-                        P: ""
-                    }
                 ]
             }
         ]

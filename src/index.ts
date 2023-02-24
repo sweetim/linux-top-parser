@@ -367,16 +367,18 @@ interface FieldsValues {
 function parseFieldsValues(input: FieldAndColumnsDisplayType): FieldsValues[] {
     const header = parseColumnsHeader(input.header)
 
-    return input.fields.map(line => {
-        return Object.fromEntries(
-            header.map(h => {
-                const key = h.title
-                const value = line.slice(h.start, h.end).trim()
+    return input.fields
+        .filter(line => line.length > 0)
+        .map(line => {
+            return Object.fromEntries(
+                header.map(h => {
+                    const key = h.title
+                    const value = line.slice(h.start, h.end).trim()
 
-                return [ key, value ]
-            })
-        )
-    })
+                    return [ key, value ]
+                })
+            )
+        })
 }
 
 if (import.meta.vitest) {
@@ -424,6 +426,19 @@ if (import.meta.vitest) {
                   P: "0"
                 }
             ]
+
+            expect(parseFieldsValues(input)).toStrictEqual(expected)
+        })
+
+        it("will not parse if the input is empty", () => {
+            const input: FieldAndColumnsDisplayType = {
+                header: "  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                  P",
+                fields: [
+                    ""
+                ]
+            }
+
+            const expected: FieldsValues[] = []
 
             expect(parseFieldsValues(input)).toStrictEqual(expected)
         })
