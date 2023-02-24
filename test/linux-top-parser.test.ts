@@ -3,6 +3,7 @@ import { readFileSync } from "fs"
 import { resolve } from "path"
 
 import { parseTopInfo } from "../src"
+import { parse } from "date-fns"
 
 describe("parseTopInfo", () => {
     it("should be able to parse top output", () => {
@@ -12,7 +13,7 @@ describe("parseTopInfo", () => {
         const expected = {
             summaryDisplay: {
                 upTimeAndLoadAverage: {
-                    time: new Date("2023-02-23T06:29:37.000Z"),
+                    time: parse("15:29:37", "HH:mm:ss", new Date()),
                     upTime_s: 57240,
                     totalNumberOfUsers: 0,
                     loadAverageLast_1_min: 0.14,
