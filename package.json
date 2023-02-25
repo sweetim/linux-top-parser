@@ -1,7 +1,7 @@
 {
   "name": "linux-top-parser",
   "version": "1.0.0",
-  "description": "",
+  "description": "parser for linux top command",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
