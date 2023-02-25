@@ -8,7 +8,8 @@
     "build": "tsc",
     "test": "vitest",
     "coverage": "vitest run --coverage",
-    "example": "ts-node ./example/app.ts"
+    "example:read-from-file": "ts-node ./example/read-from-file.ts",
+    "example:stream-from-top-command": "ts-node ./example/stream-from-top-command.ts"
   },
   "keywords": [
     "top",
