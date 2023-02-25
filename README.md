@@ -12,11 +12,11 @@ const topInfo = parseTopInfo(TOP_INFO_STRING);
 ```
 
 
-### Example
+### Code Examples
 
-There are 2 examples on how to use this package
-- read from file
-- stream from the linux `top` command output
+There are 2 code examples shown in the [example](https://github.com/sweetim/linux-top-parser/tree/master/example) folder on how to use this package
+- [read from file](https://github.com/sweetim/linux-top-parser/blob/master/example/read-from-file.ts)
+- [stream from the linux `top` command output](https://github.com/sweetim/linux-top-parser/blob/master/example/stream-from-top-command.ts)
 
 Reference
 - https://man7.org/linux/man-pages/man1/top.1.html
