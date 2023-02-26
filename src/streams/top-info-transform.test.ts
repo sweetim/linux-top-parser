@@ -12,7 +12,7 @@ describe("bufferTillDelimiterTransform", () => {
     it("should buffer the input", async () => {
         const getAllDataFromStream = (input: string[]) => {
             return new Promise(resolve => {
-                let output = []
+                const output: any[] = []
 
                 const rawDataStream = Readable.from("")
                 input.forEach(msg => rawDataStream.push(msg))
@@ -21,11 +21,9 @@ describe("bufferTillDelimiterTransform", () => {
                     bufferTillDelimiterTransform(/(?=^top)/gm)
                 )
                 .on("data", (data) => {
-                    console.log(data)
                     output.push(data)
                 })
                 .on("end", () => {
-                    console.log("end")
                     resolve(output)
                 })
             })
@@ -71,7 +69,6 @@ ghi
         ]
 
         const actual = await getAllDataFromStream(input)
-        console.log(actual)
         expect(actual).toStrictEqual(expected)
     })
 })
