@@ -8,6 +8,7 @@
     "build": "tsc",
     "test": "vitest",
     "coverage": "vitest run --coverage",
+    "prepublish": "npm run build",
     "example:read-from-file": "ts-node ./example/read-from-file.ts",
     "example:stream-from-top-command": "ts-node ./example/stream-from-top-command.ts"
   },
@@ -25,5 +26,11 @@
   },
   "dependencies": {
     "date-fns": "^2.29.3"
-  }
+  },
+  "files": [
+    "lib",
+    "LICENSE",
+    "README.md",
+    "package.json"
+  ]
 }
