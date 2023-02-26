@@ -6,10 +6,10 @@ import {
 
 import { Readable } from "stream"
 
-import { bufferTillDelimiterTransform } from "./top-info-transform"
+import { bufferTillNextHeader } from "./top-info-transform"
 
-describe("bufferTillDelimiterTransform", () => {
-    it("should buffer the input", async () => {
+describe("bufferTillNextHeader", () => {
+    it("should buffer the input until next header", async () => {
         const getAllDataFromStream = (input: string[]) => {
             return new Promise(resolve => {
                 const output: any[] = []
@@ -18,7 +18,7 @@ describe("bufferTillDelimiterTransform", () => {
                 input.forEach(msg => rawDataStream.push(msg))
 
                 rawDataStream.pipe(
-                    bufferTillDelimiterTransform(/(?=^top)/gm)
+                    bufferTillNextHeader(/(?=^top)/gm)
                 )
                 .on("data", (data) => {
                     output.push(data)
@@ -65,7 +65,10 @@ abc
 def
 ghi
 
-`
+`,
+`top
+123
+456`
         ]
 
         const actual = await getAllDataFromStream(input)

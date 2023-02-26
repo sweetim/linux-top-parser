@@ -8,7 +8,7 @@ import { parseTopInfo } from ".."
  * @returns transform stream
  */
 export function topInfoTransform(toString = false): Transform {
-    return bufferTillDelimiterTransform(
+    return bufferTillNextHeader(
         /(?=^top)/gm,
         (buffer) => {
             const topInfo = parseTopInfo(buffer)
@@ -21,31 +21,35 @@ export function topInfoTransform(toString = false): Transform {
 }
 
 /**
- * it will always wait for next delimiter before emitting any data
- * @param delimiter {RegEx} regular expression for delimiter
+ * it will always wait for next header before emitting any data
+ * @param delimiter {RegEx} regular expression for header
  * @param mappingFn  a mapping function
  * @returns transform stream
  */
-export function bufferTillDelimiterTransform(
-    delimiter: RegExp,
+export function bufferTillNextHeader(
+    header: RegExp,
     mappingFn: (buffer: string) => any = (buffer: string) => buffer): Transform
 {
     let buffer = ""
 
     return new Transform({
         objectMode: true,
-        transform(chunk: Buffer, encoding, callback) {
+        flush(cb) {
+            this.push(mappingFn(buffer))
+            cb()
+        },
+        transform(chunk: Buffer, encoding, cb) {
             chunk.toString()
-                .split(delimiter)
+                .split(header)
                 .forEach(msg => {
-                    const isDelimiter = delimiter.test(msg)
+                    const isHeader = header.test(msg)
 
-                    if (buffer && isDelimiter) {
+                    if (buffer && isHeader) {
                         this.push(mappingFn(buffer))
                         buffer = ""
                     }
 
-                    if (isDelimiter) {
+                    if (isHeader) {
                         buffer = msg
 
                         return
@@ -54,7 +58,7 @@ export function bufferTillDelimiterTransform(
                     buffer += msg
                 })
 
-            callback()
+            cb()
         },
     })
 }
