@@ -1,5 +1,6 @@
 import { parse } from "date-fns"
-import { ColumnsHeader,
+import {
+    ColumnsHeader,
     CpuStates,
     FieldAndColumnsDisplayType,
     FieldsValues,

@@ -1,14 +1,23 @@
 ## Linux TOP Parser
 
-This package will parse the output from the linux `top` command
+This package will parse the output from the linux `top` command into object
 
 
 ### Usage
 
 ```js
+const { createReadStream } = require("fs")
+
 const { parseTopInfo } = require("linux-top-parser");
+const { topInfoTransform } = require("linux-top-parser/streams");
 
 const topInfo = parseTopInfo(TOP_INFO_STRING);
+
+// or using transform stream
+createReadStream(TOP_FILE_PATH)
+    .pipe(topInfoTransform(true))
+    .pipe(process.stdout)
+
 ```
 
 
