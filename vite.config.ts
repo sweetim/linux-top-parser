@@ -10,7 +10,8 @@ export default defineConfig({
             "src/**/*.{ts}"
         ],
         exclude: [
-            "lib/**"
+            "lib/**",
+            "node_modules/**"
         ]
     },
 })
