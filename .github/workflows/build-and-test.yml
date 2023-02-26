@@ -33,7 +33,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: code-coverage-report
-        path: coverage
+        path: coverage/**
 
   sonar-cloud-analysis:
     runs-on: ubuntu-latest
@@ -41,6 +41,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
     - name: get coverage report folder
       uses: actions/download-artifact@v3
       with:
