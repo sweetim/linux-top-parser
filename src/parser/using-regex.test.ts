@@ -7,7 +7,6 @@ import { CpuStates,
     PhysicalMemory,
     TaskStates,
     TopInfoDisplayType,
-    UpTimeAndLoadAverage,
     VirtualMemory
 } from "./types"
 

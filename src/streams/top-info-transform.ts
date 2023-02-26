@@ -2,6 +2,11 @@ import { Transform } from "node:stream"
 
 import { parseTopInfo } from ".."
 
+/**
+ * top info transform stream
+ * @param toString {boolean} output top info as string
+ * @returns transform stream
+ */
 export function topInfoTransform(toString = false): Transform {
     let buffer = ""
     const matcher = /(?=^top)/gm
