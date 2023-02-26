@@ -37,7 +37,7 @@ export function parseUpTime_s(input: string): number {
 }
 
 export function parseUpTimeAndLoadAverage(line: string): UpTimeAndLoadAverage {
-    const matcher = /top - ([\d:]+) up (.+(?=,  \d \busers)),  (\d) \busers,  load average:(\s[\d.]+),(\s[\d.]+),(\s[\d.]+,?)/gm
+    const matcher = /top - ([\d:]+) up (.+(?=,\s+\d \busers)),\s+(\d) \busers,\s+load average:(\s[\d.]+),(\s[\d.]+),(\s[\d.]+,?)/gm
     const tokens = Array.from(line.matchAll(matcher)).flat()
 
     if (tokens.length === 0) {
@@ -79,7 +79,7 @@ export function parseCpuStates(line: string): CpuStates {
         throw new Error("Invalid string format")
     }
 
-    // @ts-ignore
+    // @ts-expect-error The rationale for this is to try different method of parsing the code
     return Object.fromEntries(tokens
         .map(([, , value, key]) => [key, Number(value)]))
 }

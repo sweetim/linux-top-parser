@@ -1,4 +1,5 @@
 import { Transform } from "node:stream"
+
 import { parseTopInfo } from ".."
 
 export function topInfoTransform(toString = false): Transform {

@@ -2,6 +2,7 @@
 
 This package will parse the output from the linux `top` command into object
 
+It supports any number of columns and fields
 
 ### Usage
 
