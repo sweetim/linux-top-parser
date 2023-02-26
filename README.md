@@ -1,4 +1,7 @@
 ## Linux TOP Parser
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=sweetim_linux-top-parser&metric=coverage)](https://sonarcloud.io/summary/new_code?id=sweetim_linux-top-parser)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=sweetim_linux-top-parser&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=sweetim_linux-top-parser)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=sweetim_linux-top-parser&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=sweetim_linux-top-parser)
 
 This package will parse the output from the linux `top` command into object
 
@@ -6,9 +9,8 @@ It supports any number of columns and fields
 
 ### Usage
 
-```js
-const { createReadStream } = require("fs")
 
+```js
 const { parseTopInfo } = require("linux-top-parser");
 const { topInfoTransform } = require("linux-top-parser/streams");
 
@@ -20,7 +22,6 @@ createReadStream(TOP_FILE_PATH)
     .pipe(process.stdout)
 
 ```
-
 
 ### Code Examples
 
