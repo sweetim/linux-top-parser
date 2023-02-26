@@ -12,6 +12,12 @@ export default defineConfig({
         exclude: [
             "lib/**",
             "node_modules/**"
-        ]
+        ],
+        coverage: {
+            reporter: [
+                "text",
+                "lcov"
+            ]
+        }
     },
 })
