@@ -5,7 +5,7 @@
   "types": "lib/index.d.ts",
   "exports": {
     ".": "./lib/index.js",
-    "./stream": "./lib/stream/index.js"
+    "./streams": "./lib/streams/index.js"
   },
   "scripts": {
     "build": "tsc",
@@ -32,7 +32,8 @@
     "vitest": "^0.28.5"
   },
   "dependencies": {
-    "date-fns": "^2.29.3"
+    "date-fns": "^2.29.3",
+    "linux-top-parser": "^1.1.0"
   },
   "files": [
     "lib",

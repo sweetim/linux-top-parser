@@ -1,1 +1,1 @@
-export * from "./top-info-transform"
+export { topInfoTransform } from "./top-info-transform"

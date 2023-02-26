@@ -4,8 +4,7 @@ import { resolve } from "path"
 
 import { parse } from "date-fns"
 
-import { parseTopInfo } from "../src"
-import { TopInfo } from "../src/parser"
+import { parseTopInfo, TopInfo } from "../src"
 
 const SINGLE_DATA_FILE_NAME = "single.txt"
 const MULTI_DATA_FILE_NAME = "multi.txt"

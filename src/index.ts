@@ -1,5 +1,7 @@
 import { UsingRegex, TopInfo } from "./parser"
 
+export { topInfoTransform } from "./streams/top-info-transform"
+export { TopInfo } from "./parser/types"
 /**
  * Will parse the output of top linux command into an object
  * @param {string} input - the text block that contains the top output
