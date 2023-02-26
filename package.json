@@ -2,8 +2,11 @@
   "name": "linux-top-parser",
   "version": "1.0.0",
   "description": "parser for linux top command",
-  "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": "./lib/index.js",
+    "./stream": "./lib/stream/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "test": "vitest",
