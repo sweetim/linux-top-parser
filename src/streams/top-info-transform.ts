@@ -28,6 +28,7 @@ export function topInfoTransform(toString = false): Transform {
  */
 export function bufferTillNextHeader(
     header: RegExp,
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     mappingFn: (buffer: string) => any = (buffer: string) => buffer): Transform
 {
     let buffer = ""

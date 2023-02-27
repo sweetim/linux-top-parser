@@ -12,6 +12,7 @@ describe("bufferTillNextHeader", () => {
     it("should buffer the input until next header", async () => {
         const getAllDataFromStream = (input: string[]) => {
             return new Promise(resolve => {
+                /* eslint-disable @typescript-eslint/no-explicit-any */
                 const output: any[] = []
 
                 const rawDataStream = Readable.from("")
