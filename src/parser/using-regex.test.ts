@@ -50,7 +50,7 @@ describe("parseUpTime_s", () => {
 describe("parseUpTimeAndLoadAverage", () => {
     it.each([
         {
-            input: "top - 14:48:52 up 2 days, 13:23,  0 users,  load average: 0.07, 0.02, 0.00",
+            input: "top - 14:48:52 up 2 days, 13:23,  0 user,  load average: 0.07, 0.02, 0.00",
             expected: {
                 time: parse("14:48:52", "HH:mm:ss", new Date()),
                 upTime_s: 220980,
@@ -61,7 +61,7 @@ describe("parseUpTimeAndLoadAverage", () => {
             }
         },
         {
-            input: "top - 01:18:02 up 1 day, 23:52,  1 users,  load average: 0.97, 0.33, 0.17",
+            input: "top - 01:18:02 up 1 day, 23:52,  1 user,  load average: 0.97, 0.33, 0.17",
             expected: {
                 time: parse("01:18:02", "HH:mm:ss", new Date()),
                 upTime_s: 172320,
@@ -72,11 +72,11 @@ describe("parseUpTimeAndLoadAverage", () => {
             }
         },
         {
-            input: "top - 15:29:37 up 15:54,  1 users,  load average: 0.14, 0.07, 0.06",
+            input: "top - 15:29:37 up 15:54,  2 users,  load average: 0.14, 0.07, 0.06",
             expected: {
                 time: parse("15:29:37", "HH:mm:ss", new Date()),
                 upTime_s: 57240,
-                totalNumberOfUsers: 1,
+                totalNumberOfUsers: 2,
                 loadAverageLast_1_min: 0.14,
                 loadAverageLast_5_min: 0.07,
                 loadAverageLast_15_min: 0.06
