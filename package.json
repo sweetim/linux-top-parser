@@ -7,6 +7,9 @@
     ".": "./lib/index.js",
     "./streams": "./lib/streams/index.js"
   },
+  "bin": {
+    "linux-top-parser": "./lib/bin.js"
+  },
   "scripts": {
     "build": "tsc",
     "lint": "eslint .",
@@ -44,6 +47,7 @@
     "vitest": "^0.29.1"
   },
   "dependencies": {
+    "commander": "^10.0.0",
     "date-fns": "^2.29.3"
   },
   "files": [
