@@ -1,14 +1,14 @@
-module.exports = {
-    extends: [
+{
+    "root": true,
+    "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended"
     ],
-    parser: "@typescript-eslint/parser",
-    plugins: [
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
         "@typescript-eslint"
     ],
-    ignorePatterns: [
+    "ignorePatterns": [
         "lib/**"
-    ],
-    root: true,
+    ]
 }
