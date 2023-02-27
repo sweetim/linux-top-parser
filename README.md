@@ -1,7 +1,10 @@
 ## Linux TOP Parser
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=sweetim_linux-top-parser&metric=coverage)](https://sonarcloud.io/summary/new_code?id=sweetim_linux-top-parser)
+
+![npm](https://img.shields.io/npm/v/linux-top-parser?label=linux-top-parser)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/sweetim/linux-top-parser/build-and-test.yml)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=sweetim_linux-top-parser&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=sweetim_linux-top-parser)
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=sweetim_linux-top-parser&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=sweetim_linux-top-parser)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=sweetim_linux-top-parser&metric=coverage)](https://sonarcloud.io/summary/new_code?id=sweetim_linux-top-parser)
 
 This package will parse the output from the linux `top` command into object
 
