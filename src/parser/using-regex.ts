@@ -37,7 +37,7 @@ export function parseUpTime_s(input: string): number {
 }
 
 export function parseUpTimeAndLoadAverage(line: string): UpTimeAndLoadAverage {
-    const matcher = /top - ([\d:]+) up (.+(?=,\s+\d \busers)),\s+(\d) \busers,\s+load average:(\s[\d.]+),(\s[\d.]+),(\s[\d.]+,?)/gm
+    const matcher = /top - ([\d:]+) up (.+(?=,\s+\d \buser)),\s+(\d) \buser[s]?,\s+load average:(\s[\d.]+),(\s[\d.]+),(\s[\d.]+,?)/gm
     const tokens = Array.from(line.matchAll(matcher)).flat()
 
     if (tokens.length === 0) {
