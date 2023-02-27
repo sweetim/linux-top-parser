@@ -1,4 +1,4 @@
-## Linux TOP Parser
+# Linux TOP Parser
 
 [![npm][npm-shield]][npm-url]
 [![GitHub Workflow Status][github-workflow-shield]][github-workflow-url]
@@ -10,12 +10,45 @@ This package will parse the output from the linux `top` command into JSON object
 
 It supports any number of columns and fields
 
-### Usage
+## Usage
+
+there are 2 ways to use this package
+- CLI
+- API
+
+### Prerequisites
+- npm
+```
+npm i linux-top-parser
+```
+
+### CLI
+
+To use the CLI, you should install the package globally
+
+```
+npm i linux-top-parser -g
+```
+
+then you can pipe the output of `top` command to the cli
+
+```
+top -b | linux-top-parser
+```
+or you can use the JSON processor CLI ( [jq](https://github.com/stedolan/jq) ) to process the stream
+
+```
+top -b | linux-top-parser | jq ".[0].summaryDisplay"
+```
+
+
+### API
 
 
 ```js
 const { parseTopInfo, topInfoTransform } = require("linux-top-parser");
 
+// normal string parsing
 const topInfo = parseTopInfo(TOP_INFO_STRING);
 
 // or using transform stream
@@ -31,7 +64,8 @@ There are 2 code examples shown in the [example](https://github.com/sweetim/linu
 - [read from file](https://github.com/sweetim/linux-top-parser/blob/master/example/read-from-file.ts)
 - [stream from the linux `top` command output](https://github.com/sweetim/linux-top-parser/blob/master/example/stream-from-top-command.ts)
 
-Reference
+
+### Reference
 - https://man7.org/linux/man-pages/man1/top.1.html
 
 
