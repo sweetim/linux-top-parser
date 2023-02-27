@@ -141,12 +141,14 @@ export function parseColumnsHeader(line: string): ColumnsHeader[] {
             const start = (acc[i - 1] ?? { end: 0 }).end
             const end = start + token.length
 
-            return acc.push({
+            acc.push({
                 raw,
                 title,
                 start,
                 end
-            }), acc
+            })
+
+            return acc
         }, [])
 }
 
