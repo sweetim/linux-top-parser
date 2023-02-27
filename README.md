@@ -14,8 +14,7 @@ It supports any number of columns and fields
 
 
 ```js
-const { parseTopInfo } = require("linux-top-parser");
-const { topInfoTransform } = require("linux-top-parser/streams");
+const { parseTopInfo, topInfoTransform } = require("linux-top-parser");
 
 const topInfo = parseTopInfo(TOP_INFO_STRING);
 
