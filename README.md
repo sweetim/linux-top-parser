@@ -10,12 +10,6 @@ This package will parse the output from the linux `top` command into JSON object
 
 It supports any number of columns and fields
 
-### Installation
-
-```
-npm i linux-top-parser
-```
-
 ## Usage
 
 there are 2 ways to use this package
@@ -39,6 +33,13 @@ top -b | npx linux-top-parser | jq ".[0].summaryDisplay"
 
 ### API
 
+### Installation
+
+```
+npm i linux-top-parser -S
+```
+
+### Code
 
 ```js
 const { parseTopInfo, topInfoTransform } = require("linux-top-parser");
@@ -53,7 +54,7 @@ createReadStream(TOP_FILE_PATH)
 
 ```
 
-### Code Examples
+### Examples
 
 There are 2 code examples shown in the [example](https://github.com/sweetim/linux-top-parser/tree/master/example) folder on how to use this package
 - [read from file](https://github.com/sweetim/linux-top-parser/blob/master/example/read-from-file.ts)
