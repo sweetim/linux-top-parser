@@ -1,4 +1,7 @@
+import { EOL } from "os"
+
 import { parse } from "date-fns"
+
 import {
     ColumnsHeader,
     CpuStates,
@@ -71,17 +74,27 @@ export function parseTaskStates(str: string): TaskStates {
     };
 }
 
-export function parseCpuStates(line: string): CpuStates {
-    const matcher = /((\d+.\d+)\s+([^,]+))/gm
+export function parseCpuStates(line: string): CpuStates[] {
+    const matcher = /^%Cpu([\d]+|\b\(s\))\s*:\s*(\d+.\d+)\sus,\s*(\d+.\d+)\ssy,\s*(\d+.\d+)\sni,\s*(\d+.\d+)\sid,\s*(\d+.\d+)\swa,\s*(\d+.\d+)\shi,\s*(\d+.\d+)\ssi,\s*(\d+.\d+)\sst/gm
     const tokens = Array.from(line.matchAll(matcher))
 
     if (tokens.length === 0) {
         throw new Error("Invalid string format")
     }
 
-    // @ts-expect-error The rationale for this is to try different method of parsing the code
-    return Object.fromEntries(tokens
-        .map(([, , value, key]) => [key, Number(value)]))
+    return tokens
+        .map(t => t.map(Number).splice(1))
+        .map(t => ({
+            cpu: isNaN(t[0]) ? -1 : t[0],
+            us: t[1],
+            sy: t[2],
+            ni: t[3],
+            id: t[4],
+            wa: t[5],
+            hi: t[6],
+            si: t[7],
+            st: t[8],
+        }))
 }
 
 export function parsePhysicalMemory(input: string): PhysicalMemory {
@@ -103,7 +116,7 @@ export function parsePhysicalMemory(input: string): PhysicalMemory {
 export function parseVirtualMemory(input: string): VirtualMemory {
     const matcher = /MiB Swap:\s+(\d+\.\d+)\s+total,\s+(\d+\.\d+)\s+free,\s+(\d+\.\d+)\s+used\.\s+(\d+\.\d+)\s+avail Mem/
     const tokens = input.match(matcher);
-
+    
     if (!tokens) {
         throw new Error("Invalid string format")
     }
@@ -116,13 +129,13 @@ export function parseVirtualMemory(input: string): VirtualMemory {
     };
 }
 
-export function parseSummaryDisplay(lines: string[]): SummaryDisplay {
+export function parseSummaryDisplay(lines: string): SummaryDisplay {
     return {
-        upTimeAndLoadAverage: parseUpTimeAndLoadAverage(lines[0]),
-        taskStates: parseTaskStates(lines[1]),
-        cpuStates: parseCpuStates(lines[2]),
-        physicalMemory: parsePhysicalMemory(lines[3]),
-        virtualMemory: parseVirtualMemory(lines[4]),
+        upTimeAndLoadAverage: parseUpTimeAndLoadAverage(lines),
+        taskStates: parseTaskStates(lines),
+        cpuStates: parseCpuStates(lines),
+        physicalMemory: parsePhysicalMemory(lines),
+        virtualMemory: parseVirtualMemory(lines),
     }
 }
 
@@ -169,16 +182,18 @@ export function parseFieldsValues(input: FieldAndColumnsDisplayType): FieldsValu
         })
 }
 
-const SUMMARY_DISPLAY_LINE_COUNT = 5
-
 export function convertIntoTopInfoDisplayType(input: string): TopInfoDisplayType {
-    const lines = input.split("\n")
+    const lines = input.split(EOL)
+
+    const summaryLineCount = lines.map(line => line.match(/^[^\s]/gm))
+        .filter(Boolean)
+        .length
 
     return {
-        summary: lines.slice(0, SUMMARY_DISPLAY_LINE_COUNT),
+        summary: lines.slice(0, summaryLineCount).join(EOL),
         fieldAndColumns: {
-            header: lines.slice(SUMMARY_DISPLAY_LINE_COUNT + 1).shift() || "",
-            fields: lines.slice(SUMMARY_DISPLAY_LINE_COUNT + 2)
+            header: lines.slice(summaryLineCount + 1).shift() || "",
+            fields: lines.slice(summaryLineCount + 2)
         }
     }
 }

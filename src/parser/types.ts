@@ -16,6 +16,7 @@ export interface TaskStates {
 }
 
 export interface CpuStates {
+    cpu: number,
     us: number
     sy: number
     ni: number
@@ -43,7 +44,7 @@ export interface VirtualMemory {
 export interface SummaryDisplay {
     upTimeAndLoadAverage: UpTimeAndLoadAverage
     taskStates: TaskStates
-    cpuStates: CpuStates
+    cpuStates: CpuStates[]
     physicalMemory: PhysicalMemory
     virtualMemory: VirtualMemory
 }
@@ -60,7 +61,7 @@ export interface FieldsValues {
 }
 
 export interface TopInfoDisplayType {
-    summary: string[]
+    summary: string
     fieldAndColumns: FieldAndColumnsDisplayType
 }
 

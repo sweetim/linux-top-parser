@@ -36,7 +36,8 @@ describe("parseTopInfo", () => {
                         stopped: 0,
                         zombie: 20
                     },
-                    cpuStates: {
+                    cpuStates: [{
+                        cpu: -1,
                         us: 0.4,
                         sy: 0.8,
                         ni: 0,
@@ -45,7 +46,7 @@ describe("parseTopInfo", () => {
                         hi: 0,
                         si: 0.4,
                         st: 0
-                    },
+                    }],
                     physicalMemory: {
                         total: 7947.3,
                         free: 408.6,
@@ -178,7 +179,8 @@ describe("parseTopInfo", () => {
                         stopped: 0,
                         zombie: 20
                     },
-                    cpuStates: {
+                    cpuStates: [{
+                        cpu: -1,
                         us: 0.4,
                         sy: 0.8,
                         ni: 0,
@@ -187,7 +189,7 @@ describe("parseTopInfo", () => {
                         hi: 0,
                         si: 0.4,
                         st: 0
-                    },
+                    }],
                     physicalMemory: {
                         total: 7947.3,
                         free: 408.6,
@@ -311,16 +313,94 @@ describe("parseTopInfo", () => {
                         stopped: 0,
                         zombie: 20
                     },
-                    cpuStates: {
-                        us: 0.4,
-                        sy: 0.8,
-                        ni: 0.1,
-                        id: 98.4,
-                        wa: 0.2,
-                        hi: 0.3,
-                        si: 0.4,
+                    cpuStates: [{
+                        cpu: 0,
+                        us: 0,
+                        sy: 22.7,
+                        ni: 0,
+                        id: 77.3,
+                        wa: 0,
+                        hi: 0,
+                        si: 0,
                         st: 0
                     },
+                    {
+                        cpu: 1,
+                        us: 4.8,
+                        sy: 0,
+                        ni: 0,
+                        id: 95.2,
+                        wa: 0,
+                        hi: 0,
+                        si: 0,
+                        st: 0
+                    },
+                    {
+                        cpu: 2,
+                        us: 0,
+                        sy: 0,
+                        ni: 0,
+                        id: 100,
+                        wa: 0,
+                        hi: 0,
+                        si: 0,
+                        st: 0
+                    },
+                    {
+                        cpu: 3,
+                        us: 5.3,
+                        sy: 10.5,
+                        ni: 0,
+                        id: 84.2,
+                        wa: 0,
+                        hi: 0,
+                        si: 0,
+                        st: 0
+                    },
+                    {
+                        cpu: 4,
+                        us: 4.8,
+                        sy: 4.8,
+                        ni: 0,
+                        id: 90.5,
+                        wa: 0,
+                        hi: 0,
+                        si: 0,
+                        st: 0
+                    },
+                    {
+                        cpu: 5,
+                        us: 4.8,
+                        sy: 0,
+                        ni: 0,
+                        id: 95.2,
+                        wa: 0,
+                        hi: 0,
+                        si: 0,
+                        st: 0
+                    },
+                    {
+                        cpu: 6,
+                        us: 0,
+                        sy: 0,
+                        ni: 0,
+                        id: 100,
+                        wa: 0,
+                        hi: 0,
+                        si: 0,
+                        st: 0
+                    },
+                    {
+                        cpu: 7,
+                        us: 0,
+                        sy: 4.8,
+                        ni: 0,
+                        id: 95.2,
+                        wa: 0,
+                        hi: 0,
+                        si: 0,
+                        st: 0
+                    }],
                     physicalMemory: {
                         total: 7947.3,
                         free: 408.6,
