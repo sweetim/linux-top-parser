@@ -18,7 +18,7 @@ import {
 import { fromDays, fromHours, fromMinutes } from "./util"
 
 export function parseUpTime_s(input: string): number {
-    const matcher = /((\d+) day[s]?,)?\s?(\d+:\d+)/gm
+    const matcher = /(?:((\d+) day[s]?,)?\s?(\d+:\d+)|(\d+)\smin)/gm
     const tokens = Array.from(input.matchAll(matcher)).flat()
 
     if (tokens.length === 0) {
@@ -26,7 +26,7 @@ export function parseUpTime_s(input: string): number {
     }
 
     const days = Number(tokens[2] || 0)
-    const time = parse(tokens[3], "H:mm", new Date())
+    const time = parse(tokens[3] || `00:${tokens[4]}`, "H:mm", new Date())
     const hours = time.getHours()
     const minutes = time.getMinutes()
 
@@ -116,7 +116,7 @@ export function parsePhysicalMemory(input: string): PhysicalMemory {
 export function parseVirtualMemory(input: string): VirtualMemory {
     const matcher = /MiB Swap:\s+(\d+\.\d+)\s+total,\s+(\d+\.\d+)\s+free,\s+(\d+\.\d+)\s+used\.\s+(\d+\.\d+)\s+avail Mem/
     const tokens = input.match(matcher);
-    
+
     if (!tokens) {
         throw new Error("Invalid string format")
     }
