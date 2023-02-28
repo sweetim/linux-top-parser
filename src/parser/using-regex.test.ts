@@ -26,6 +26,10 @@ describe("parseUpTime_s", () => {
 
     it.each([
         {
+            input: "21 min",
+            expected: 1260
+        },
+        {
             input: "23:56",
             expected: 86160
         },
@@ -49,6 +53,17 @@ describe("parseUpTime_s", () => {
 
 describe("parseUpTimeAndLoadAverage", () => {
     it.each([
+        {
+            input: "top - 23:09:37 up 21 min,  0 users,  load average: 0.11, 0.10, 0.18",
+            expected: {
+                time: parse("23:09:37", "HH:mm:ss", new Date()),
+                upTime_s: 1260,
+                totalNumberOfUsers: 0,
+                loadAverageLast_1_min: 0.11,
+                loadAverageLast_5_min: 0.10,
+                loadAverageLast_15_min: 0.18
+            }
+        },
         {
             input: "top - 14:48:52 up 2 days, 13:23,  0 user,  load average: 0.07, 0.02, 0.00",
             expected: {
