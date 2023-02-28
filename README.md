@@ -10,35 +10,30 @@ This package will parse the output from the linux `top` command into JSON object
 
 It supports any number of columns and fields
 
+### Installation
+
+```
+npm i linux-top-parser
+```
+
 ## Usage
 
 there are 2 ways to use this package
 - CLI
 - API
 
-### Prerequisites
-- npm
-```
-npm i linux-top-parser
-```
 
 ### CLI
 
-To use the CLI, you should install the package globally
+the CLI can be pipe from the output of `top` command
 
 ```
-npm i linux-top-parser -g
-```
-
-then you can pipe the output of `top` command to the cli
-
-```
-top -b | linux-top-parser
+top -b | npx linux-top-parser
 ```
 or you can use the JSON processor CLI ( [jq](https://github.com/stedolan/jq) ) to process the stream
 
 ```
-top -b | linux-top-parser | jq ".[0].summaryDisplay"
+top -b | npx linux-top-parser | jq ".[0].summaryDisplay"
 ```
 
 

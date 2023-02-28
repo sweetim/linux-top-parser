@@ -11,6 +11,7 @@
     "linux-top-parser": "./lib/bin.js"
   },
   "scripts": {
+    "start": "ts-node ./src/bin.ts",
     "build": "tsc",
     "lint": "eslint .",
     "test": "vitest",
@@ -48,6 +49,7 @@
     "vitest": "^0.29.1"
   },
   "dependencies": {
+    "chalk": "^4.1.2",
     "commander": "^10.0.0",
     "date-fns": "^2.29.3"
   },
