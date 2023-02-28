@@ -38,6 +38,7 @@
     "url": "https://github.com/sweetim/linux-top-parser"
   },
   "devDependencies": {
+    "@swc/core": "^1.3.37",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@typescript-eslint/parser": "^5.53.0",
     "@vitest/coverage-c8": "^0.29.1",
