@@ -26,7 +26,11 @@ describe("parseUpTime_s", () => {
 
     it.each([
         {
-            input: "21 min",
+            input: "1 min",
+            expected: 60
+        },
+        {
+            input: "21 mins",
             expected: 1260
         },
         {
