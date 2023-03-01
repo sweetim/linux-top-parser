@@ -1,0 +1,351 @@
+[
+    {
+        "summaryDisplay": {
+            "upTimeAndLoadAverage": {
+                "time": "2023-03-01T15:29:37.000Z",
+                "upTime_s": 57240,
+                "totalNumberOfUsers": 0,
+                "loadAverageLast_1_min": 0.14,
+                "loadAverageLast_5_min": 0.07,
+                "loadAverageLast_15_min": 0.06
+            },
+            "taskStates": {
+                "total": 60,
+                "running": 1,
+                "sleeping": 39,
+                "stopped": 0,
+                "zombie": 20
+            },
+            "cpuStates": [
+                {
+                    "cpu": -1,
+                    "us": 0.4,
+                    "sy": 0.8,
+                    "ni": 0,
+                    "id": 98.4,
+                    "wa": 0,
+                    "hi": 0,
+                    "si": 0.4,
+                    "st": 0
+                }
+            ],
+            "physicalMemory": {
+                "total": 7947.3,
+                "free": 408.6,
+                "used": 4257.3,
+                "buffOrCache": 3281.4
+            },
+            "virtualMemory": {
+                "total": 2048,
+                "free": 2048,
+                "used": 0,
+                "available": 3392.8
+            }
+        },
+        "fieldValues": [
+            {
+                "PID": "8253",
+                "USER": "tim",
+                "PR": "20",
+                "NI": "0",
+                "VIRT": "23.8g",
+                "RES": "235884",
+                "SHR": "37740",
+                "S": "S",
+                "%CPU": "6.7",
+                "%MEM": "2.9",
+                "TIME+": "0:03.07",
+                "COMMAND": "/home/tim/.nvm/versions/node/v18.12.0/bin/node --experimental-loader=file:///home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/runners/node/hooks.mjs /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/server.js runner 0 40475 vitest@0.14.0,autoDetected  /home/tim/learn/linux-top-parser/node_modules /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/proje+",
+                "P": "2"
+            },
+            {
+                "PID": "1",
+                "USER": "root",
+                "PR": "20",
+                "NI": "0",
+                "VIRT": "1804",
+                "RES": "1192",
+                "SHR": "1104",
+                "S": "S",
+                "%CPU": "0.0",
+                "%MEM": "0.0",
+                "TIME+": "0:00.02",
+                "COMMAND": "/init",
+                "P": "0"
+            },
+            {
+                "PID": "137",
+                "USER": "root",
+                "PR": "20",
+                "NI": "0",
+                "VIRT": "731772",
+                "RES": "23544",
+                "SHR": "13128",
+                "S": "S",
+                "%CPU": "0.0",
+                "%MEM": "0.3",
+                "TIME+": "0:01.18",
+                "COMMAND": "/mnt/wsl/docker-desktop/docker-desktop-user-distro proxy --distro-name Ubuntu-20.04 --docker-desktop-root /mnt/wsl/docker-desktop --show-kube-system-containers=true",
+                "P": "7"
+            },
+            {
+                "PID": "1111",
+                "USER": "tim",
+                "PR": "20",
+                "NI": "0",
+                "VIRT": "2612",
+                "RES": "592",
+                "SHR": "524",
+                "S": "S",
+                "%CPU": "0.0",
+                "%MEM": "0.0",
+                "TIME+": "0:00.01",
+                "COMMAND": "sh -c \"$VSCODE_WSL_EXT_LOCATION/scripts/wslServer.sh\" 441438abd1ac652551dbe4d408dfcec8a499b8bf stable code-server .vscode-server --host=127.0.0.1 --port=0 --connection-token=1875702107-1805014795-764146776-1050828467 --use-host-proxy --without-browser-env-var --disable-websocket-compression --accept-server-license-terms --telemetry-level=all",
+                "P": "12"
+            },
+            {
+                "PID": "1178",
+                "USER": "root",
+                "PR": "20",
+                "NI": "0",
+                "VIRT": "1824",
+                "RES": "104",
+                "SHR": "0",
+                "S": "S",
+                "%CPU": "0.0",
+                "%MEM": "0.0",
+                "TIME+": "0:00.74",
+                "COMMAND": "/init",
+                "P": "1"
+            },
+            {
+                "PID": "1353",
+                "USER": "tim",
+                "PR": "20",
+                "NI": "0",
+                "VIRT": "1032408",
+                "RES": "61188",
+                "SHR": "31896",
+                "S": "S",
+                "%CPU": "0.0",
+                "%MEM": "0.8",
+                "TIME+": "0:04.06",
+                "COMMAND": "/home/tim/.vscode-server/bin/441438abd1ac652551dbe4d408dfcec8a499b8bf/node /home/tim/.vscode-server/bin/441438abd1ac652551dbe4d408dfcec8a499b8bf/out/bootstrap-fork --type=fileWatcher",
+                "P": "4"
+            }
+        ]
+    },
+    {
+        "summaryDisplay": {
+            "upTimeAndLoadAverage": {
+                "time": "2023-03-01T15:29:38.000Z",
+                "upTime_s": 57240,
+                "totalNumberOfUsers": 0,
+                "loadAverageLast_1_min": 0.14,
+                "loadAverageLast_5_min": 0.07,
+                "loadAverageLast_15_min": 0.06
+            },
+            "taskStates": {
+                "total": 60,
+                "running": 1,
+                "sleeping": 39,
+                "stopped": 0,
+                "zombie": 20
+            },
+            "cpuStates": [
+                {
+                    "cpu": 0,
+                    "us": 0,
+                    "sy": 22.7,
+                    "ni": 0,
+                    "id": 77.3,
+                    "wa": 0,
+                    "hi": 0,
+                    "si": 0,
+                    "st": 0
+                },
+                {
+                    "cpu": 1,
+                    "us": 4.8,
+                    "sy": 0,
+                    "ni": 0,
+                    "id": 95.2,
+                    "wa": 0,
+                    "hi": 0,
+                    "si": 0,
+                    "st": 0
+                },
+                {
+                    "cpu": 2,
+                    "us": 0,
+                    "sy": 0,
+                    "ni": 0,
+                    "id": 100,
+                    "wa": 0,
+                    "hi": 0,
+                    "si": 0,
+                    "st": 0
+                },
+                {
+                    "cpu": 3,
+                    "us": 5.3,
+                    "sy": 10.5,
+                    "ni": 0,
+                    "id": 84.2,
+                    "wa": 0,
+                    "hi": 0,
+                    "si": 0,
+                    "st": 0
+                },
+                {
+                    "cpu": 4,
+                    "us": 4.8,
+                    "sy": 4.8,
+                    "ni": 0,
+                    "id": 90.5,
+                    "wa": 0,
+                    "hi": 0,
+                    "si": 0,
+                    "st": 0
+                },
+                {
+                    "cpu": 5,
+                    "us": 4.8,
+                    "sy": 0,
+                    "ni": 0,
+                    "id": 95.2,
+                    "wa": 0,
+                    "hi": 0,
+                    "si": 0,
+                    "st": 0
+                },
+                {
+                    "cpu": 6,
+                    "us": 0,
+                    "sy": 0,
+                    "ni": 0,
+                    "id": 100,
+                    "wa": 0,
+                    "hi": 0,
+                    "si": 0,
+                    "st": 0
+                },
+                {
+                    "cpu": 7,
+                    "us": 0,
+                    "sy": 4.8,
+                    "ni": 0,
+                    "id": 95.2,
+                    "wa": 0,
+                    "hi": 0,
+                    "si": 0,
+                    "st": 0
+                }
+            ],
+            "physicalMemory": {
+                "total": 7947.3,
+                "free": 408.6,
+                "used": 4257.3,
+                "buffOrCache": 3281.4
+            },
+            "virtualMemory": {
+                "total": 2048,
+                "free": 2048,
+                "used": 0,
+                "available": 3392.8
+            }
+        },
+        "fieldValues": [
+            {
+                "PID": "8253",
+                "USER": "tim",
+                "PR": "20",
+                "NI": "0",
+                "VIRT": "23.8g",
+                "RES": "235884",
+                "SHR": "37740",
+                "S": "S",
+                "%CPU": "6.7",
+                "%MEM": "3.9",
+                "TIME+": "0:03.07",
+                "COMMAND": "/home/tim/.nvm/versions/node/v18.12.0/bin/node --experimental-loader=file:///home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/runners/node/hooks.mjs /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/server.js runner 0 40475 vitest@0.14.0,autoDetected  /home/tim/learn/linux-top-parser/node_modules /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/proje+",
+                "P": "2"
+            },
+            {
+                "PID": "1",
+                "USER": "root",
+                "PR": "20",
+                "NI": "0",
+                "VIRT": "1804",
+                "RES": "1192",
+                "SHR": "1104",
+                "S": "S",
+                "%CPU": "0.0",
+                "%MEM": "0.0",
+                "TIME+": "0:00.02",
+                "COMMAND": "/init",
+                "P": "0"
+            },
+            {
+                "PID": "137",
+                "USER": "root",
+                "PR": "20",
+                "NI": "0",
+                "VIRT": "731772",
+                "RES": "23544",
+                "SHR": "13128",
+                "S": "S",
+                "%CPU": "0.0",
+                "%MEM": "0.3",
+                "TIME+": "0:01.18",
+                "COMMAND": "/mnt/wsl/docker-desktop/docker-desktop-user-distro proxy --distro-name Ubuntu-20.04 --docker-desktop-root /mnt/wsl/docker-desktop --show-kube-system-containers=true",
+                "P": "7"
+            },
+            {
+                "PID": "1111",
+                "USER": "tim",
+                "PR": "20",
+                "NI": "0",
+                "VIRT": "2612",
+                "RES": "592",
+                "SHR": "524",
+                "S": "S",
+                "%CPU": "0.0",
+                "%MEM": "0.1",
+                "TIME+": "0:00.01",
+                "COMMAND": "sh -c \"$VSCODE_WSL_EXT_LOCATION/scripts/wslServer.sh\" 441438abd1ac652551dbe4d408dfcec8a499b8bf stable code-server .vscode-server --host=127.0.0.1 --port=0 --connection-token=1875702107-1805014795-764146776-1050828467 --use-host-proxy --without-browser-env-var --disable-websocket-compression --accept-server-license-terms --telemetry-level=all",
+                "P": "12"
+            },
+            {
+                "PID": "1178",
+                "USER": "root",
+                "PR": "20",
+                "NI": "0",
+                "VIRT": "1824",
+                "RES": "104",
+                "SHR": "0",
+                "S": "S",
+                "%CPU": "0.0",
+                "%MEM": "0.0",
+                "TIME+": "0:00.74",
+                "COMMAND": "/init",
+                "P": "1"
+            },
+            {
+                "PID": "1353",
+                "USER": "tim",
+                "PR": "20",
+                "NI": "0",
+                "VIRT": "1032408",
+                "RES": "61188",
+                "SHR": "31896",
+                "S": "S",
+                "%CPU": "0.0",
+                "%MEM": "0.8",
+                "TIME+": "0:04.06",
+                "COMMAND": "/home/tim/.vscode-server/bin/441438abd1ac652551dbe4d408dfcec8a499b8bf/node /home/tim/.vscode-server/bin/441438abd1ac652551dbe4d408dfcec8a499b8bf/out/bootstrap-fork --type=fileWatcher",
+                "P": "4"
+            }
+        ]
+    }
+]

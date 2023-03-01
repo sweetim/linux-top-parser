@@ -18,15 +18,15 @@ import {
 import { fromDays, fromHours, fromMinutes } from "./util"
 
 export function parseUpTime_s(input: string): number {
-    const matcher = /(?:((\d+) day[s]?,)?\s?(\d+:\d+)|(\d+)\smin)/gm
+    const matcher = /(?:(\d+)\s\bday[s]?,\s)?(?:(\d+:\d+)|(\d+)\smin)/gm
     const tokens = Array.from(input.matchAll(matcher)).flat()
 
     if (tokens.length === 0) {
         throw new Error(`invalid string format (${input})`)
     }
 
-    const days = Number(tokens[2] || 0)
-    const time = parse(tokens[3] || `00:${tokens[4]}`, "H:mm", new Date())
+    const days = Number(tokens[1] || 0)
+    const time = parse(tokens[2] || `00:${tokens[3]}`, "H:mm", new Date())
     const hours = time.getHours()
     const minutes = time.getMinutes()
 
@@ -140,7 +140,7 @@ export function parseSummaryDisplay(lines: string): SummaryDisplay {
 }
 
 export function parseColumnsHeader(line: string): ColumnsHeader[] {
-    const matcher = /(?:(?<=[^\s])\s(?=[^\s])[^\s]+\s+(?=\s)|(\s+[^\s]+))/gm
+    const matcher = /(?:((?<=[^\s])\s(?=[^\s])|(?=^\w))[^\s]+\s+(?=\s)|(\s+[^\s]+))/gm
     const tokens = line.match(matcher)
 
     if (!tokens) {
@@ -185,9 +185,14 @@ export function parseFieldsValues(input: FieldAndColumnsDisplayType): FieldsValu
 export function convertIntoTopInfoDisplayType(input: string): TopInfoDisplayType {
     const lines = input.split(EOL)
 
-    const summaryLineCount = lines.map(line => line.match(/^[^\s]/gm))
-        .filter(Boolean)
-        .length
+    const summaryLineCount = lines
+        .map((line, i) => ({
+            isEmpty: line.length === 0,
+            lineNumber: i
+        }))
+        .filter(({ isEmpty }) => isEmpty)
+        .map(({ lineNumber }) => lineNumber)
+        .shift() || 0
 
     return {
         summary: lines.slice(0, summaryLineCount).join(EOL),
