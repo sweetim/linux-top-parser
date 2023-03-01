@@ -6,7 +6,132 @@ import {
 
 import { Readable } from "stream"
 
-import { bufferTillNextHeader } from "./top-info-transform"
+import {
+    bufferTillNextHeader,
+    parseTopInfoTransformOptions,
+    TopInfoTransformConfig,
+    TopInfoTransformOptions
+} from "./top-info-transform"
+
+describe("parseTopInfoTransformOptions", () => {
+    it("should return default value when no option is input", () => {
+        const expected: TopInfoTransformConfig = {
+            isStringify: false,
+            isPrettify: false,
+            isSummary: false,
+            isFilter: false
+        }
+
+        expect(parseTopInfoTransformOptions()).toStrictEqual(expected)
+        expect(parseTopInfoTransformOptions(<TopInfoTransformOptions>{})).toStrictEqual(expected)
+    })
+
+    it("should return isStringify false only", () => {
+        const input: TopInfoTransformOptions = {
+            stringify: false
+        }
+
+        const expected: TopInfoTransformConfig = {
+            isStringify: false,
+            isPrettify: false,
+            isSummary: false,
+            isFilter: false
+        }
+
+        expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
+    })
+
+    it.each(<TopInfoTransformOptions[]>[
+        {
+            stringify: true
+        },
+        {
+            stringify: {}
+        }
+    ])("should return isStringify true only (%s)", (input) => {
+        const expected: TopInfoTransformConfig = {
+            isStringify: true,
+            isPrettify: false,
+            isSummary: false,
+            isFilter: false
+        }
+
+        expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
+    })
+
+    it("should return isPrettify true only", () => {
+        const input: TopInfoTransformOptions = {
+            stringify: {
+                prettify: true
+            }
+        }
+
+        const expected: TopInfoTransformConfig = {
+            isStringify: true,
+            isPrettify: true,
+            isSummary: false,
+            isFilter: false
+        }
+
+        expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
+    })
+
+    it.each(<TopInfoTransformOptions[]>[
+        {
+            stringify: {
+                prettify: false
+            }
+        },
+        {
+            stringify: {}
+        }
+    ])("should return isPrettify false only (%s)", (input) => {
+        const expected: TopInfoTransformConfig = {
+            isStringify: true,
+            isPrettify: false,
+            isSummary: false,
+            isFilter: false
+        }
+
+        expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
+    })
+
+    it.each([
+        true,
+        false
+    ])("should return isSummary same as configured (%s)", (summary) => {
+        const input: TopInfoTransformOptions = {
+            summary
+        }
+
+        const expected: TopInfoTransformConfig = {
+            isStringify: false,
+            isPrettify: false,
+            isSummary: summary,
+            isFilter: false
+        }
+
+        expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
+    })
+
+    it.each([
+        true,
+        false
+    ])("should return isFilter same as configured (%s)", (filter) => {
+        const input: TopInfoTransformOptions = {
+            filter
+        }
+
+        const expected: TopInfoTransformConfig = {
+            isStringify: false,
+            isPrettify: false,
+            isSummary: false,
+            isFilter: filter
+        }
+
+        expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
+    })
+})
 
 describe("bufferTillNextHeader", () => {
     it("should buffer the input until next header", async () => {
