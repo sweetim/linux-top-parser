@@ -15,7 +15,7 @@
     "build": "tsc",
     "lint": "eslint .",
     "test": "vitest",
-    "coverage": "vitest run --coverage",
+    "coverage": "vitest run --coverage --reporter verbose --reporter junit --outputFile=./coverage/test-results.xml",
     "prepublishOnly": "npm run build",
     "example:read-from-file": "ts-node ./example/read-from-file.ts",
     "example:stream-from-top-command": "ts-node ./example/stream-from-top-command.ts"

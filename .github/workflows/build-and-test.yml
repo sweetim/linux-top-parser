@@ -32,7 +32,6 @@ jobs:
     - run: npm ci
     - run: npm run lint
     - run: npm run build --if-present
-    - run: npm test -- --reporter verbose
     - run: npm run coverage
     - name: Archive code coverage results
       uses: actions/upload-artifact@v3
@@ -46,6 +45,7 @@ jobs:
         api_key: ${{ secrets.FORESIGHT_API_KEY }}
         test_format: JUNIT
         test_framework: JEST
+        test_path: ./coverage/test-results.xml
         coverage_format: TXT
 
   sonar-cloud-analysis:
