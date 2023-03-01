@@ -43,6 +43,10 @@ jobs:
         test_path: ./coverage/test-results.xml
         coverage_format: LCOV/TXT
         coverage_path: ./coverage/lcov.info
+        tags: |
+          node_version: ${{ matrix.node-version }}
+          event_name: ${{github.event_name}}
+
     - name: analyze with sonar cloud
       uses: SonarSource/sonarcloud-github-action@cb201f3b2d7a38231a8c042dfea4539c8bea180b
       env:
