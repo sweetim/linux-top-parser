@@ -14,25 +14,10 @@ It supports any number of columns and fields
 ## Usage
 
 there are 2 ways to use this package
-- CLI
 - API
+- CLI
 
-
-### CLI
-
-the CLI can be pipe from the output of `top` command
-
-```
-top -b | npx linux-top-parser
-```
-or you can use the JSON processor CLI ( [jq](https://github.com/stedolan/jq) ) to process the stream
-
-```
-top -b | npx linux-top-parser | jq ".[0].summaryDisplay"
-```
-
-
-### API
+## API
 
 #### Installation
 
@@ -60,6 +45,31 @@ There are 2 code examples shown in the [example](https://github.com/sweetim/linu
 - [read from file](https://github.com/sweetim/linux-top-parser/blob/master/example/read-from-file.ts)
 - [stream from the linux `top` command output](https://github.com/sweetim/linux-top-parser/blob/master/example/stream-from-top-command.ts)
 
+## CLI
+
+the CLI can be pipe from the output of `top` command
+
+```
+top -b | npx linux-top-parser
+```
+or you can use the JSON processor CLI ( [jq](https://github.com/stedolan/jq) ) to process the stream
+
+```
+top -b | npx linux-top-parser | jq ".[0].summaryDisplay"
+```
+### Usage
+
+```
+linux-top-parser [options]
+
+Options:
+  -V, --version   output the version number
+  -s, --summary   output summary display only (default: false)
+  -p, --prettify  output top info with indentation and color (default: false)
+  -f, --filter    output process that has > 0% of CPU usage only (default: false)
+  -h, --help      display help for command
+
+```
 
 ### Reference
 - https://man7.org/linux/man-pages/man1/top.1.html
