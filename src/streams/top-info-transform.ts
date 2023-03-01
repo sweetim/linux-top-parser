@@ -42,7 +42,7 @@ export function parseTopInfoTransformOptions(options?: TopInfoTransformOptions):
         output.isStringify = true
     }
 
-    if (options.stringify != undefined
+    if (options.stringify !== undefined
         && typeof options.stringify !== "boolean"
         && "prettify" in options.stringify
         && typeof options.stringify.prettify === "boolean"
