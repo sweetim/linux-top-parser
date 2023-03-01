@@ -13,6 +13,7 @@ export default defineConfig({
             "lib/**",
             "node_modules/**"
         ],
+        globalSetup: "./test/global-setup.ts",
         outputFile: "./coverage/test-results.xml",
         coverage: {
             reporter: [
