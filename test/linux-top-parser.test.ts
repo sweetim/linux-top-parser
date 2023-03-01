@@ -29,7 +29,9 @@ describe("parseTopInfo", () => {
         const expected: TopInfo[] = JSON.parse(
             readFileSync(getDataFilePath(expectedFile)).toString()
         ).map(item => {
-            item.summaryDisplay.upTimeAndLoadAverage.time = new Date(item.summaryDisplay.upTimeAndLoadAverage.time)
+            item.summaryDisplay.upTimeAndLoadAverage.time = new Date(
+                item.summaryDisplay.upTimeAndLoadAverage.time)
+
             return item
         })
 
