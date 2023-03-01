@@ -6,11 +6,11 @@ import {
 
 import { Readable } from "stream"
 
-import { 
+import {
     bufferTillNextHeader,
     parseTopInfoTransformOptions,
     TopInfoTransformConfig,
-    TopInfoTransformOptions 
+    TopInfoTransformOptions
 } from "./top-info-transform"
 
 describe("parseTopInfoTransformOptions", () => {
@@ -21,7 +21,7 @@ describe("parseTopInfoTransformOptions", () => {
             isSummary: false,
             isFilter: false
         }
-        
+
         expect(parseTopInfoTransformOptions()).toStrictEqual(expected)
         expect(parseTopInfoTransformOptions(<TopInfoTransformOptions>{})).toStrictEqual(expected)
     })
@@ -30,14 +30,14 @@ describe("parseTopInfoTransformOptions", () => {
         const input: TopInfoTransformOptions = {
             stringify: false
         }
-        
+
         const expected: TopInfoTransformConfig = {
             isStringify: false,
             isPrettify: false,
             isSummary: false,
             isFilter: false
         }
-        
+
         expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
     })
 
@@ -48,14 +48,14 @@ describe("parseTopInfoTransformOptions", () => {
         {
             stringify: {}
         }
-    ])("should return isStringify true only (%s)", (input) => {        
+    ])("should return isStringify true only (%s)", (input) => {
         const expected: TopInfoTransformConfig = {
             isStringify: true,
             isPrettify: false,
             isSummary: false,
             isFilter: false
         }
-        
+
         expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
     })
 
@@ -65,14 +65,14 @@ describe("parseTopInfoTransformOptions", () => {
                 prettify: true
             }
         }
-        
+
         const expected: TopInfoTransformConfig = {
             isStringify: true,
             isPrettify: true,
             isSummary: false,
             isFilter: false
         }
-        
+
         expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
     })
 
@@ -92,37 +92,43 @@ describe("parseTopInfoTransformOptions", () => {
             isSummary: false,
             isFilter: false
         }
-        
+
         expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
     })
 
-    it("should return isSummary true only", () => {
+    it.each([
+        true,
+        false
+    ])("should return isSummary same as configured (%s)", (summary) => {
         const input: TopInfoTransformOptions = {
-            summary: true
+            summary
         }
-        
+
         const expected: TopInfoTransformConfig = {
             isStringify: false,
             isPrettify: false,
-            isSummary: true,
+            isSummary: summary,
             isFilter: false
         }
-        
+
         expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
     })
 
-    it("should return isSummary false only", () => {
+    it.each([
+        true,
+        false
+    ])("should return isFilter same as configured (%s)", (filter) => {
         const input: TopInfoTransformOptions = {
-            summary: false
+            filter
         }
-        
+
         const expected: TopInfoTransformConfig = {
             isStringify: false,
             isPrettify: false,
             isSummary: false,
-            isFilter: false
+            isFilter: filter
         }
-        
+
         expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
     })
 })

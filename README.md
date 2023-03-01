@@ -68,7 +68,6 @@ Options:
   -p, --prettify  output top info with indentation and color (default: false)
   -f, --filter    output process that has > 0% of CPU usage only (default: false)
   -h, --help      display help for command
-
 ```
 
 ### Reference
