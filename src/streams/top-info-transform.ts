@@ -37,12 +37,12 @@ export function parseTopInfoTransformOptions(options?: TopInfoTransformOptions):
     if (Object.keys(options).length === 0) {
         return output
     }
-    
+
     if (options.stringify) {
         output.isStringify = true
     }
-    
-    if (options.stringify !== undefined
+
+    if (options.stringify != undefined
         && typeof options.stringify !== "boolean"
         && "prettify" in options.stringify
         && typeof options.stringify.prettify === "boolean"
@@ -50,7 +50,7 @@ export function parseTopInfoTransformOptions(options?: TopInfoTransformOptions):
     {
         output.isPrettify = options.stringify.prettify
     }
-    
+
     if (options.summary) {
         output.isSummary = options.summary
     }
@@ -72,7 +72,7 @@ function topInfoMapping(config: TopInfoTransformConfig)
         if (config.isFilter) {
             output = topInfo.map(info => {
                 const { fieldValues, ...others } = info
-                
+
                 return {
                     ...others,
                     fieldValues: fieldValues.filter(f => Number(f["%CPU"]) > 0)
@@ -103,7 +103,7 @@ function topInfoMapping(config: TopInfoTransformConfig)
  */
 export function topInfoTransform(options: TopInfoTransformOptions): Transform {
     const config = parseTopInfoTransformOptions(options)
-    
+
     return bufferTillNextHeader(
         /(?=^top)/gm,
         topInfoMapping(config)
