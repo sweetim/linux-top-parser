@@ -40,6 +40,7 @@
   },
   "devDependencies": {
     "@swc/core": "^1.3.37",
+    "@types/prettyjson": "^0.0.30",
     "@typescript-eslint/eslint-plugin": "^5.53.0",
     "@typescript-eslint/parser": "^5.53.0",
     "@vitest/coverage-c8": "^0.29.1",
@@ -51,7 +52,8 @@
   "dependencies": {
     "chalk": "^4.1.2",
     "commander": "^10.0.0",
-    "date-fns": "^2.29.3"
+    "date-fns": "^2.29.3",
+    "prettyjson": "^1.2.5"
   },
   "files": [
     "lib",
