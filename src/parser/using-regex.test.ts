@@ -295,24 +295,42 @@ describe("parseVirtualMemory", () => {
 })
 
 describe("parseColumnsHeader", () => {
-    it("can parse correctly with normal input", () => {
-        const input = "  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                  P"
-        const expected = [
-            "  PID",
-            " USER     ",
-            " PR",
-            "  NI",
-            "    VIRT",
-            "    RES",
-            "    SHR",
-            " S ",
-            " %CPU",
-            "  %MEM",
-            "     TIME+",
-            " COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                 ",
-            " P"
-        ]
-
+    it.each([
+        {
+            input: "USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                 P ",
+            expected: [
+                "USER     ",
+                " PR",
+                "  NI",
+                "    VIRT",
+                "    RES",
+                "    SHR",
+                " S ",
+                " %CPU",
+                "  %MEM",
+                "     TIME+",
+                " COMMAND                                ",
+                " P"
+            ]
+        },{
+            input: "  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                  P",
+            expected: [
+                "  PID",
+                " USER     ",
+                " PR",
+                "  NI",
+                "    VIRT",
+                "    RES",
+                "    SHR",
+                " S ",
+                " %CPU",
+                "  %MEM",
+                "     TIME+",
+                " COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                 ",
+                " P"
+            ]
+        }
+    ])("can parse correctly with normal input ($input)", ({ input, expected }) => {
         const actual = parseColumnsHeader(input)
             .map(({ start, end }) => {
                 return input.slice(start, end)

@@ -140,7 +140,7 @@ export function parseSummaryDisplay(lines: string): SummaryDisplay {
 }
 
 export function parseColumnsHeader(line: string): ColumnsHeader[] {
-    const matcher = /(?:(?<=[^\s])\s(?=[^\s])[^\s]+\s+(?=\s)|(\s+[^\s]+))/gm
+    const matcher = /(?:((?<=[^\s])\s(?=[^\s])|(?=^\w))[^\s]+\s+(?=\s)|(\s+[^\s]+))/gm
     const tokens = line.match(matcher)
 
     if (!tokens) {
