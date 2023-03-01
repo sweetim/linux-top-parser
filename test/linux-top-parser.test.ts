@@ -18,6 +18,10 @@ describe("parseTopInfo", () => {
         {
             inputFile: "multi.txt",
             expectedFile: "multi-expected.json"
+        },
+        {
+            inputFile: "multi-all.txt",
+            expectedFile: "multi-all-expected.json"
         }
     ])("should be able to parse top output in file ($inputFile) to be same as ($expectedFile)", ({ inputFile, expectedFile }) => {
         const input = readFileSync(getDataFilePath(inputFile)).toString()
@@ -28,6 +32,7 @@ describe("parseTopInfo", () => {
             item.summaryDisplay.upTimeAndLoadAverage.time = new Date(item.summaryDisplay.upTimeAndLoadAverage.time)
             return item
         })
+
         expect(parseTopInfo(input)).toStrictEqual(expected)
     })
 
