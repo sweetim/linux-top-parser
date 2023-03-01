@@ -18,6 +18,11 @@ jobs:
         node-version: [16.x, 18.x]
 
     steps:
+    - name: Collect Workflow Telemetry
+      uses: runforesight/foresight-workflow-kit-action@v1
+      if: ${{ always() }}
+      with:
+        api_key: ${{ secrets.FORESIGHT_API_KEY }}
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
@@ -34,6 +39,14 @@ jobs:
       with:
         name: code-coverage-report
         path: coverage/**
+    - name: Analyze Test and/or Coverage Results
+      uses: runforesight/foresight-test-kit-action@v1
+      if: ${{ always() }}
+      with:
+        api_key: ${{ secrets.FORESIGHT_API_KEY }}
+        test_format: JUNIT
+        test_framework: JEST
+        coverage_format: TXT
 
   sonar-cloud-analysis:
     runs-on: ubuntu-latest
