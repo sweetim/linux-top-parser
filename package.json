@@ -1,6 +1,6 @@
 {
   "name": "linux-top-parser",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "parser for linux top command",
   "types": "lib/index.d.ts",
   "exports": {
