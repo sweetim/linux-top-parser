@@ -2,7 +2,7 @@ import { spawn } from "child_process"
 
 import { topInfoTransform } from "../src/streams"
 
-const top = spawn("top", ["-b"]);
+const top = spawn("top", ["-bn 1"]);
 
 // if want to output as object
 top.stdout
@@ -11,5 +11,7 @@ top.stdout
 
 // if want to output as string
 top.stdout
-    .pipe(topInfoTransform(true))
+    .pipe(topInfoTransform({
+        stringify: true
+    }))
     .pipe(process.stdout)

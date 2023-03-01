@@ -35,7 +35,9 @@ const topInfo = parseTopInfo(TOP_INFO_STRING);
 
 // or using transform stream
 createReadStream(TOP_FILE_PATH)
-    .pipe(topInfoTransform(true))
+    .pipe(topInfoTransform({
+        stringify: true
+    }))
     .pipe(process.stdout)
 ```
 
@@ -84,7 +86,7 @@ Options:
 [security-url]: https://sonarcloud.io/summary/new_code?id=sweetim_linux-top-parser
 [reliability-shield]: https://sonarcloud.io/api/project_badges/measure?project=sweetim_linux-top-parser&metric=reliability_rating
 [reliability-url]: https://sonarcloud.io/summary/new_code?id=sweetim_linux-top-parser
-[foresight-shield]: https://api-public.service.runforesight.com/api/v1/badge/test?repoId=2f6249b7-0e9f-4e61-b1cd-64f9eb6c2fd9
-[foresight-url]: https://docs.runforesight.com/
+[foresight-shield]: https://api-public.service.runforesight.com/api/v1/badge/success?repoId=2f6249b7-0e9f-4e61-b1cd-64f9eb6c2fd9
+[foresight-url]: https://app.runforesight.com/repositories/github/sweetim/linux-top-parser/pull-requests
 [coverage-shield]: https://sonarcloud.io/api/project_badges/measure?project=sweetim_linux-top-parser&metric=coverage
 [coverage-url]: https://sonarcloud.io/summary/new_code?id=sweetim_linux-top-parser

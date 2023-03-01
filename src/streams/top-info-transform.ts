@@ -101,7 +101,7 @@ function topInfoMapping(config: TopInfoTransformConfig)
  * @param toString {boolean} output top info as string
  * @returns transform stream
  */
-export function topInfoTransform(options: TopInfoTransformOptions): Transform {
+export function topInfoTransform(options?: TopInfoTransformOptions): Transform {
     const config = parseTopInfoTransformOptions(options)
 
     return bufferTillNextHeader(
