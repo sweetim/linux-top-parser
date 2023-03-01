@@ -45,7 +45,7 @@ jobs:
         api_key: ${{ secrets.FORESIGHT_API_KEY }}
         test_format: JUNIT
         test_framework: JEST
-        test_path: ./coverage/test-results.xml
+        test_path: "**/coverage/test-results.xml"
         coverage_format: TXT
 
   sonar-cloud-analysis:
