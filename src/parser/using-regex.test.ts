@@ -23,15 +23,34 @@ import {
 } from "./using-regex"
 
 describe("parseUpTime_s", () => {
-
     it.each([
         {
-            input: "21 min",
+            input: "0 min",
+            expected: 0
+        },
+        {
+            input: "1 min",
+            expected: 60
+        },
+        {
+            input: "21 mins",
             expected: 1260
         },
         {
             input: "23:56",
             expected: 86160
+        },
+        {
+            input: "01:56",
+            expected: 6960
+        },
+        {
+            input: "30 days, 0 min",
+            expected: 2592000
+        },
+        {
+            input: "30 days, 6 mins",
+            expected: 2592360
         },
         {
             input: "1 day, 23:52",
@@ -53,6 +72,17 @@ describe("parseUpTime_s", () => {
 
 describe("parseUpTimeAndLoadAverage", () => {
     it.each([
+        {
+            input: "top - 10:16:11 up 30 days, 5 min,  1 user,  load average: 1.97, 1.61, 1.14",
+            expected: {
+                time: parse("10:16:11", "HH:mm:ss", new Date()),
+                upTime_s: 2592300,
+                totalNumberOfUsers: 1,
+                loadAverageLast_1_min: 1.97,
+                loadAverageLast_5_min: 1.61,
+                loadAverageLast_15_min: 1.14
+            }
+        },
         {
             input: "top - 23:09:37 up 21 min,  0 users,  load average: 0.11, 0.10, 0.18",
             expected: {

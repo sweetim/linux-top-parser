@@ -18,15 +18,15 @@ import {
 import { fromDays, fromHours, fromMinutes } from "./util"
 
 export function parseUpTime_s(input: string): number {
-    const matcher = /(?:((\d+) day[s]?,)?\s?(\d+:\d+)|(\d+)\smin)/gm
+    const matcher = /(?:(\d+)\s\bday[s]?,\s)?(?:(\d+:\d+)|(\d+)\smin)/gm
     const tokens = Array.from(input.matchAll(matcher)).flat()
 
     if (tokens.length === 0) {
         throw new Error(`invalid string format (${input})`)
     }
 
-    const days = Number(tokens[2] || 0)
-    const time = parse(tokens[3] || `00:${tokens[4]}`, "H:mm", new Date())
+    const days = Number(tokens[1] || 0)
+    const time = parse(tokens[2] || `00:${tokens[3]}`, "H:mm", new Date())
     const hours = time.getHours()
     const minutes = time.getMinutes()
 
