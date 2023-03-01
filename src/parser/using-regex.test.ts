@@ -440,6 +440,35 @@ MiB Mem :   7947.3 total,    408.6 free,   4257.3 used,   3281.4 buff/cache
 MiB Swap:   2048.0 total,   2048.0 free,      0.0 used.   3392.8 avail Mem
 
   PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                  P
+18253 tim       20   0   23.8g 235884  37740 S   6.7   3.9   0:03.07 /home/tim/.nvm/versions/node/v18.12.0/bin/node --experimental-loader=file:///home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/runners/node/hooks.mjs /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/server.js runner 0 40475 vitest@0.14.0,autoDetected  /home/tim/learn/linux-top-parser/node_modules /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/proje+  2
+
+
+`,
+            expected: {
+                summary: `top - 15:29:38 up 15:54,  0 users,  load average: 0.14, 0.07, 0.06
+Tasks:  60 total,   1 running,  39 sleeping,   0 stopped,  20 zombie
+%Cpu(s):  0.4 us,  0.8 sy,  0.1 ni, 98.4 id,  0.2 wa,  0.3 hi,  0.4 si,  0.0 st
+MiB Mem :   7947.3 total,    408.6 free,   4257.3 used,   3281.4 buff/cache
+MiB Swap:   2048.0 total,   2048.0 free,      0.0 used.   3392.8 avail Mem`,
+                fieldAndColumns: {
+                    header: "  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                  P",
+                    fields: [
+                        "18253 tim       20   0   23.8g 235884  37740 S   6.7   3.9   0:03.07 /home/tim/.nvm/versions/node/v18.12.0/bin/node --experimental-loader=file:///home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/runners/node/hooks.mjs /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/server.js runner 0 40475 vitest@0.14.0,autoDetected  /home/tim/learn/linux-top-parser/node_modules /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/proje+  2",
+                        "",
+                        "",
+                        ""
+                    ]
+                }
+            }
+        },
+        {
+            input: `top - 15:29:38 up 15:54,  0 users,  load average: 0.14, 0.07, 0.06
+Tasks:  60 total,   1 running,  39 sleeping,   0 stopped,  20 zombie
+%Cpu(s):  0.4 us,  0.8 sy,  0.1 ni, 98.4 id,  0.2 wa,  0.3 hi,  0.4 si,  0.0 st
+MiB Mem :   7947.3 total,    408.6 free,   4257.3 used,   3281.4 buff/cache
+MiB Swap:   2048.0 total,   2048.0 free,      0.0 used.   3392.8 avail Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND                                                                                                                                                                                                                                                                                                                                                                                                                                                  P
  8253 tim       20   0   23.8g 235884  37740 S   6.7   3.9   0:03.07 /home/tim/.nvm/versions/node/v18.12.0/bin/node --experimental-loader=file:///home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/runners/node/hooks.mjs /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/wallaby65f4bb/server.js runner 0 40475 vitest@0.14.0,autoDetected  /home/tim/learn/linux-top-parser/node_modules /home/tim/.vscode-server/extensions/wallabyjs.wallaby-vscode-1.0.349/proje+  2
 `,
             expected: {

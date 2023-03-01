@@ -185,9 +185,14 @@ export function parseFieldsValues(input: FieldAndColumnsDisplayType): FieldsValu
 export function convertIntoTopInfoDisplayType(input: string): TopInfoDisplayType {
     const lines = input.split(EOL)
 
-    const summaryLineCount = lines.map(line => line.match(/^[^\s]/gm))
-        .filter(Boolean)
-        .length
+    const summaryLineCount = lines
+        .map((line, i) => ({
+            isEmpty: line.length === 0,
+            lineNumber: i
+        }))
+        .filter(({ isEmpty }) => isEmpty)
+        .map(({ lineNumber }) => lineNumber)
+        .shift() || 0
 
     return {
         summary: lines.slice(0, summaryLineCount).join(EOL),
