@@ -46,13 +46,13 @@ jobs:
         tags: |
           node_version: ${{ matrix.node-version }}
           event_name: ${{github.event_name}}
-    - name: Archive code coverage results
+    - name: archive code coverage results
       uses: actions/upload-artifact@v3
       with:
         name: code-coverage-report
         path: coverage/**
 
-  sonar-cloud-analysis:
+  code-analysis:
     runs-on: ubuntu-latest
     needs: build
 
@@ -69,9 +69,12 @@ jobs:
       with:
         name: code-coverage-report
         path: coverage
-
     - name: analyze with sonar cloud
       uses: SonarSource/sonarcloud-github-action@cb201f3b2d7a38231a8c042dfea4539c8bea180b
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_CLOUD_TOKEN }}
+    - name: qodana scan
+      uses: JetBrains/qodana-action@main
+      env:
+        QODANA_TOKEN: ${{ secrets.QODANA_TOKEN }}
