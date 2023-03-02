@@ -12,16 +12,6 @@
   <p>It supports any number of columns and fields</p>
 </div>
 
-
-<!-- [![npm][npm-shield]][npm-url]
-[![GitHub Workflow Status][github-workflow-shield]][github-workflow-url]
-[![Security Rating][security-shield]][security-url]
-[![Reliability Rating][reliability-shield]][reliability-url]
-[![Foresight Docs][foresight-shield]][foresight-url]
-[![Coverage][coverage-shield]][coverage-url] -->
-
-
-
 ## Usage
 
 there are 2 ways to use this package
