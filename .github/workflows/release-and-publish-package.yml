@@ -1,4 +1,4 @@
-name: release and publish to npm
+name: release and publish package
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
         options:
         - patch
         - minor
-        - patch
+        - major
 
 env:
   NODE_VERSION: 18.x
@@ -30,6 +30,8 @@ jobs:
 
   publish-npm:
     permissions:
+      issues: read
+      pull-requests: read
       contents: write
       packages: write
     needs: build
@@ -37,25 +39,48 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: fregante/setup-git-user@v1
-      - uses: actions/setup-node@v3
+
+      - name: setup to use npm registry
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
           registry-url: https://registry.npmjs.org/
+
       - run: npm ci
+      - run: echo "releasing ${{ inputs.release-type }} version"
       - run: npm version ${{ inputs.release-type }}
       - run: npm pkg get version
-      # - run: git push origin && git push --tags
 
       - name: publish to npm registry
-        run: npm publish --dry-run
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
-      - uses: actions/setup-node@v3
+      - name: setup to use github package registry
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_VERSION }}
           registry-url: https://npm.pkg.github.com/
       - name: publish to github package registry
-        run: npm publish --dry-run
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - name: push changes to repository
+        run: git push origin && git push --tags
+      - name: set latest git tag
+        run: echo "latest_git_tag=$(git describe --abbrev=0)" >> $GITHUB_OUTPUT
+        id: get_latest_git_tag
+
+      - name: build change log
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: create release
+        uses: mikepenz/action-gh-release@v0.2.0-a03
+        with:
+          tag_name: ${{ steps.get_latest_git_tag.outputs.latest_git_tag }}
+          body: ${{ steps.github_release.outputs.changelog }}
+
+
