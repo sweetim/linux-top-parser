@@ -28,7 +28,7 @@ jobs:
       - run: npm run build --if-present
       - run: npm test -- --reporter verbose
 
-  publish-npm:
+  release-and-publish-package:
     permissions:
       issues: read
       pull-requests: read
@@ -52,16 +52,6 @@ jobs:
       - run: npm pkg get version
 
       - name: publish to npm registry
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
-      - name: setup to use github package registry
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ env.NODE_VERSION }}
-          registry-url: https://npm.pkg.github.com/
-      - name: publish to github package registry
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
