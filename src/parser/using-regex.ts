@@ -26,7 +26,7 @@ export function parseUpTime_s(input: string): number {
     }
 
     const days = Number(tokens[1] || 0)
-    const time = parse(tokens[2] || `00:${tokens[3]}`, "H:mm", new Date())
+    const time = parse(tokens[2] || `00:${tokens[3]}`, "H:mm", new Date("2023-03-01"))
     const hours = time.getHours()
     const minutes = time.getMinutes()
 
@@ -48,7 +48,7 @@ export function parseUpTimeAndLoadAverage(line: string): UpTimeAndLoadAverage {
     }
 
     return {
-        time: parse(tokens[1], "HH:mm:ss", new Date()),
+        time: parse(tokens[1], "HH:mm:ss", new Date("2023-03-01")),
         upTime_s: parseUpTime_s(tokens[2]),
         totalNumberOfUsers: Number(tokens[3]),
         loadAverageLast_1_min: Number(tokens[4]),

@@ -75,7 +75,7 @@ describe("parseUpTimeAndLoadAverage", () => {
         {
             input: "top - 10:16:11 up 30 days, 5 min,  1 user,  load average: 1.97, 1.61, 1.14",
             expected: {
-                time: parse("10:16:11", "HH:mm:ss", new Date()),
+                time: parse("10:16:11", "HH:mm:ss", new Date("2023-03-01")),
                 upTime_s: 2592300,
                 totalNumberOfUsers: 1,
                 loadAverageLast_1_min: 1.97,
@@ -86,7 +86,7 @@ describe("parseUpTimeAndLoadAverage", () => {
         {
             input: "top - 23:09:37 up 21 min,  0 users,  load average: 0.11, 0.10, 0.18",
             expected: {
-                time: parse("23:09:37", "HH:mm:ss", new Date()),
+                time: parse("23:09:37", "HH:mm:ss", new Date("2023-03-01")),
                 upTime_s: 1260,
                 totalNumberOfUsers: 0,
                 loadAverageLast_1_min: 0.11,
@@ -97,7 +97,7 @@ describe("parseUpTimeAndLoadAverage", () => {
         {
             input: "top - 14:48:52 up 2 days, 13:23,  0 user,  load average: 0.07, 0.02, 0.00",
             expected: {
-                time: parse("14:48:52", "HH:mm:ss", new Date()),
+                time: parse("14:48:52", "HH:mm:ss", new Date("2023-03-01")),
                 upTime_s: 220980,
                 totalNumberOfUsers: 0,
                 loadAverageLast_1_min: 0.07,
@@ -108,7 +108,7 @@ describe("parseUpTimeAndLoadAverage", () => {
         {
             input: "top - 01:18:02 up 1 day, 23:52,  1 user,  load average: 0.97, 0.33, 0.17",
             expected: {
-                time: parse("01:18:02", "HH:mm:ss", new Date()),
+                time: parse("01:18:02", "HH:mm:ss", new Date("2023-03-01")),
                 upTime_s: 172320,
                 totalNumberOfUsers: 1,
                 loadAverageLast_1_min: 0.97,
@@ -119,7 +119,7 @@ describe("parseUpTimeAndLoadAverage", () => {
         {
             input: "top - 15:29:37 up 15:54,  2 users,  load average: 0.14, 0.07, 0.06",
             expected: {
-                time: parse("15:29:37", "HH:mm:ss", new Date()),
+                time: parse("15:29:37", "HH:mm:ss", new Date("2023-03-01")),
                 upTime_s: 57240,
                 totalNumberOfUsers: 2,
                 loadAverageLast_1_min: 0.14,
