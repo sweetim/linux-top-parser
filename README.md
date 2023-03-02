@@ -1,15 +1,26 @@
-# Linux TOP Parser
+<div align="center">
+  <h3 align="center">Linux TOP Parser <img src='https://static.npmjs.com/255a118f56f5346b97e56325a1217a16.svg' width='20'></h3>
+  <img src="https://img.shields.io/npm/v/linux-top-parser?label=linux-top-parser">
+  <img src="https://img.shields.io/github/actions/workflow/status/sweetim/linux-top-parser/build-and-test.yml">
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=sweetim_linux-top-parser&metric=security_rating">
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=sweetim_linux-top-parser&metric=reliability_rating">
+  <img src="https://api-public.service.runforesight.com/api/v1/badge/success?repoId=2f6249b7-0e9f-4e61-b1cd-64f9eb6c2fd9">
+  <img src="https://sonarcloud.io/api/project_badges/measure?project=sweetim_linux-top-parser&metric=coverage">
 
-[![npm][npm-shield]][npm-url]
+</br>
+  <p>This package will parse the output from the linux <strong>top</strong> command into JSON object</p>
+  <p>It supports any number of columns and fields</p>
+</div>
+
+
+<!-- [![npm][npm-shield]][npm-url]
 [![GitHub Workflow Status][github-workflow-shield]][github-workflow-url]
 [![Security Rating][security-shield]][security-url]
 [![Reliability Rating][reliability-shield]][reliability-url]
 [![Foresight Docs][foresight-shield]][foresight-url]
-[![Coverage][coverage-shield]][coverage-url]
+[![Coverage][coverage-shield]][coverage-url] -->
 
-This package will parse the output from the linux `top` command into JSON object
 
-It supports any number of columns and fields
 
 ## Usage
 
