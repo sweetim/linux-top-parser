@@ -51,11 +51,6 @@ jobs:
       - run: npm version ${{ inputs.release-type }}
       - run: npm pkg get version
 
-      - name: publish to npm registry
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
-
       - name: push changes to repository
         run: git push origin && git push --tags
       - name: set latest git tag
@@ -73,4 +68,7 @@ jobs:
           tag_name: ${{ steps.get_latest_git_tag.outputs.latest_git_tag }}
           body: ${{ steps.github_release.outputs.changelog }}
 
-
+      - name: publish to npm registry
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
