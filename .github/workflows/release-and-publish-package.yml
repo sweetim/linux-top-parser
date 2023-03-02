@@ -16,17 +16,17 @@ env:
   NODE_VERSION: 18.x
 
 jobs:
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: actions/setup-node@v3
-  #       with:
-  #         node-version: ${{ env.NODE_VERSION }}
-  #     - run: npm ci
-  #     - run: npm run lint
-  #     - run: npm run build --if-present
-  #     - run: npm test -- --reporter verbose
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build --if-present
+      - run: npm test -- --reporter verbose
 
   release-and-publish-package:
     permissions:
@@ -34,42 +34,41 @@ jobs:
       pull-requests: read
       contents: write
       packages: write
-    # needs: build
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: fregante/setup-git-user@v1
 
-      # - name: setup to use npm registry
-      #   uses: actions/setup-node@v3
-      #   with:
-      #     node-version: ${{ env.NODE_VERSION }}
-      #     registry-url: https://registry.npmjs.org/
+      - name: setup to use npm registry
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://registry.npmjs.org/
 
-      # - run: npm ci
-      # - run: echo "releasing ${{ inputs.release-type }} version"
-      # - run: npm version ${{ inputs.release-type }}
-      # - run: npm pkg get version
+      - run: npm ci
+      - run: echo "releasing ${{ inputs.release-type }} version"
+      - run: npm version ${{ inputs.release-type }}
+      - run: npm pkg get version
 
-      # - name: push changes to repository
-      #   run: git push origin && git push --tags
-      # - name: set latest git tag
-      #   run: echo "latest_git_tag=$(git describe --abbrev=0)" >> $GITHUB_OUTPUT
-      #   id: get_latest_git_tag
+      - name: push changes to repository
+        run: git push origin && git push --tags
+      - name: set latest git tag
+        run: echo "latest_git_tag=$(git describe --abbrev=0)" >> $GITHUB_OUTPUT
+        id: get_latest_git_tag
 
       - name: build change log
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo "${{ steps.github_release.outputs.changelog }}"
-      # - name: create release
-      #   uses: mikepenz/action-gh-release@v0.2.0-a03
-      #   with:
-      #     tag_name: ${{ steps.get_latest_git_tag.outputs.latest_git_tag }}
-      #     body: ${{ steps.github_release.outputs.changelog }}
+      - name: create release
+        uses: mikepenz/action-gh-release@v0.2.0-a03
+        with:
+          tag_name: ${{ steps.get_latest_git_tag.outputs.latest_git_tag }}
+          body: ${{ steps.github_release.outputs.changelog }}
 
-      # - name: publish to npm registry
-      #   run: npm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+      - name: publish to npm registry
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
