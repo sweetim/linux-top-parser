@@ -24,8 +24,8 @@
 
   </br>
 
-  <p>This package will parse the output from the linux <strong>top</strong> command into JSON object</p>
-  <p>It supports any number of columns and fields</p>
+  <p>this package will parse the output from the linux <strong>top</strong> command into JSON object</p>
+  <p>it supports any number of columns and fields</p>
 </div>
 
 ## Usage
