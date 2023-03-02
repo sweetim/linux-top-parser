@@ -62,7 +62,7 @@ jobs:
         uses: mikepenz/release-changelog-builder-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: echo "${{ toJSON(steps.github_release.outputs) }}"
+      - run: echo "${{ steps.github_release.outputs.changelog }}"
       # - name: create release
       #   uses: mikepenz/action-gh-release@v0.2.0-a03
       #   with:
