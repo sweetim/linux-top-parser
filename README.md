@@ -31,8 +31,8 @@
 ## Usage
 
 there are 2 ways to use this package
- -  API
- -  CLI
+-  API
+-  CLI
 
 ## API
 
