@@ -97,9 +97,12 @@ function topInfoMapping(config: TopInfoTransformConfig)
 }
 
 /**
- * top info transform stream
- * @param toString {boolean} output top info as string
- * @returns transform stream
+ * Transforms top information into a desired format.
+ * @param {TopInfoTransformOptions} [options] - The options for the transformation.
+ * @param {boolean | TopInfoTransformToStringOpions} [options.stringify] - Whether to stringify the output or not. If an object is given, it specifies additional options for stringification.
+ * @param {boolean} [options.summary] - to include a summary of the top information only.
+ * @param {boolean} [options.filter] - to filter process that has > 0% CPU usage.
+ * @returns {Transform} A transform stream that applies the transformation to top information chunks.
  */
 export function topInfoTransform(options?: TopInfoTransformOptions): Transform {
     const config = parseTopInfoTransformOptions(options)
@@ -111,10 +114,10 @@ export function topInfoTransform(options?: TopInfoTransformOptions): Transform {
 }
 
 /**
- * it will always wait for next header before emitting any data
- * @param delimiter {RegEx} regular expression for header
- * @param mappingFn  a mapping function
- * @returns transform stream
+ * Buffers data chunks until a header is found and then applies a mapping function to the buffer.
+ * @param {RegExp} header - The regular expression that matches the header of a new chunk.
+ * @param {(buffer: string) => any} [mappingFn] - The function that transforms the buffer into a desired format. By default, it returns the buffer as it is.
+ * @returns {Transform} A transform stream that buffers and maps data chunks based on the header.
  */
 export function bufferTillNextHeader(
     header: RegExp,
