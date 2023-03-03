@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest"
-import { readFileSync, createReadStream } from "fs"
+import { readFileSync } from "fs"
+import { Readable } from "node:stream"
 import { resolve } from "path"
 
 import { parseTopInfo, TopInfo, topInfoTransform } from "../src"
@@ -10,67 +11,71 @@ function getDataFilePath(fileName: string): string {
 }
 
 describe("linux-top-parser", () => {
-    const createTestCase = (name: string, parsingFn: (inputFile: string) => Promise<TopInfo[]>) => {
-        describe(name, () => {
-            it.each([
-                {
-                    inputFile: "single.txt",
-                    expectedFile: "single-expected.json"
-                },
-                {
-                    inputFile: "multi.txt",
-                    expectedFile: "multi-expected.json"
-                },
-                {
-                    inputFile: "multi-all.txt",
-                    expectedFile: "multi-all-expected.json"
-                }
-            ])("should be able to parse top output in file ($inputFile) to be same as ($expectedFile)", async ({ inputFile, expectedFile }) => {
-                const expected: TopInfo[] = JSON.parse(
-                    readFileSync(getDataFilePath(expectedFile)).toString()
-                ).map(item => {
-                    item.summaryDisplay.upTimeAndLoadAverage.time = new Date(
-                        item.summaryDisplay.upTimeAndLoadAverage.time)
+    const prepareTestData = () => {
+        const rawData = [
+            "single",
+            "multi",
+            "multi-all"
+        ]
 
-                    return item
-                })
+        const getInputData = (inputFile: string) => {
+            return readFileSync(getDataFilePath(inputFile)).toString()
+        }
 
-                const actual = await parsingFn(inputFile)
-                expect(actual).toStrictEqual(expected)
+        const getExpectedData = (expectedFile: string): TopInfo[] => {
+            return JSON.parse(
+                readFileSync(getDataFilePath(expectedFile)).toString()
+            ).map(item => {
+                item.summaryDisplay.upTimeAndLoadAverage.time = new Date(
+                    item.summaryDisplay.upTimeAndLoadAverage.time)
+
+                return item
             })
+        }
 
-            it("should throw error on empty input", () => {
-                // expect(() => parsingFn("")).toThrowError()
-            })
-        })
+        return rawData
+            .map(text => ({
+                inputFile: `${text}.txt`,
+                expectedFile: `${text}-expected.json`,
+            }))
+            .map(({ inputFile, expectedFile }) => ({
+                inputFile,
+                expectedFile,
+                input: getInputData(inputFile),
+                expected: getExpectedData(expectedFile)
+            }))
     }
 
-    createTestCase(
-        "parseTopInfo",
-        async (inputFile) => {
-            const input = readFileSync(getDataFilePath(inputFile)).toString()
-            return parseTopInfo(input)
+    describe("parseTopInfo", () => {
+        it.each(prepareTestData())("should be able to parse top output from file ($inputFile) to be same as ($expectedFile)", ({ input, expected }) => {
+            expect(parseTopInfo(input)).toStrictEqual(expected)
         })
 
-    createTestCase(
-        "topInfoTransform",
-        async (inputFile) => {
-            const getTopInfoFromStream = async (inputFile): Promise<TopInfo[]> => {
+        it("should throw error on empty input", () => {
+            expect(() => parseTopInfo("")).toThrowError()
+        })
+
+    })
+
+    describe("topInfoTransform", () => {
+        it.each(prepareTestData())("should be able to parse top output from file ($inputFile) to be same as ($expectedFile)", async ({ input, expected }) => {
+            const getTopInfoFromStream = async (input: string): Promise<TopInfo[]> => {
                 return new Promise((resolve) => {
                     const output: TopInfo[] = []
 
-                    createReadStream(getDataFilePath(inputFile))
+                    Readable.from(input)
                         .pipe(topInfoTransform())
                         .on("data", (data) => {
                             output.push(data)
                         })
                         .on("end", () => {
-                            resolve(output)
+                            resolve(output.flat())
                         })
                 })
             }
 
-            const actual = await getTopInfoFromStream(inputFile)
-            return actual.flat()
+            const actual = await getTopInfoFromStream(input)
+            expect(actual).toStrictEqual(expected)
         })
+    })
 })

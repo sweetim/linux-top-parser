@@ -3,7 +3,7 @@ import { Transform } from "node:stream"
 import { render } from "prettyjson"
 
 import { parseTopInfo, TopInfo } from ".."
-import { SummaryDisplay } from "../parser/index"
+import { SummaryDisplay } from "../parser"
 
 export interface TopInfoTransformOptions {
     stringify?: boolean | TopInfoTransformToStringOpions

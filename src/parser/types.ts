@@ -56,9 +56,70 @@ export interface ColumnsHeader {
     end: number
 }
 
-export interface FieldsValues {
-    [field: string]: string
-}
+const fields = [
+    "PID",
+    "ENVIRON",
+    "USER",
+    "vMj",
+    "PR",
+    "vMn",
+    "NI",
+    "USED",
+    "VIRT",
+    "nsIPC",
+    "RES",
+    "nsMNT",
+    "SHR",
+    "nsNET",
+    "S",
+    "nsPID",
+    "%CPU",
+    "nsUSER",
+    "%MEM",
+    "nsUTS",
+    "TIME+",
+    "LXC",
+    "COMMAND",
+    "RSan",
+    "PPID",
+    "RSfd",
+    "UID",
+    "RSlk",
+    "RUID",
+    "RSsh",
+    "RUSER",
+    "CGNAME",
+    "SUID",
+    "NU",
+    "SUSER",
+    "GID",
+    "GROUP",
+    "PGRP",
+    "TTY",
+    "TPGID",
+    "SID",
+    "nTH",
+    "P",
+    "TIME",
+    "SWAP",
+    "CODE",
+    "DATA",
+    "nMaj",
+    "nMin",
+    "nDRT",
+    "WCHAN",
+    "Flags",
+    "CGROUPS",
+    "SUPGIDS",
+    "SUPGRPS",
+    "TGID",
+    "OOMa",
+    "OOMs",
+] as const
+
+type Fields = typeof fields[number]
+
+export type FieldsValues = Partial<Record<Fields, string>>
 
 export interface TopInfoDisplayType {
     summary: string
