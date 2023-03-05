@@ -61,8 +61,8 @@ createReadStream(TOP_FILE_PATH)
 ### Examples
 
 There are 2 code examples shown in the [example](https://github.com/sweetim/linux-top-parser/tree/master/example) folder on how to use this package
-- [read from file](https://github.com/sweetim/linux-top-parser/blob/master/example/read-from-file.ts)
-- [stream from the linux `top` command output](https://github.com/sweetim/linux-top-parser/blob/master/example/stream-from-top-command.ts)
+-  [read from file](https://github.com/sweetim/linux-top-parser/blob/master/example/read-from-file.ts)
+-  [stream from the linux `top` command output](https://github.com/sweetim/linux-top-parser/blob/master/example/stream-from-top-command.ts)
 
 ## CLI
 
@@ -90,4 +90,4 @@ Options:
 ```
 
 ### Reference
-- https://man7.org/linux/man-pages/man1/top.1.html
+-  https://man7.org/linux/man-pages/man1/top.1.html
