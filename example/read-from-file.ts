@@ -1,7 +1,6 @@
 import { resolve } from "path"
 import { readFileSync, createReadStream } from "fs"
-import { parseTopInfo } from "../src"
-import { topInfoTransform } from "../src/streams"
+import { parseTopInfo, topInfoTransform } from "../src"
 
 const TOP_FILE_PATH = resolve(__dirname, "..", "test", "data", "multi.txt")
 
