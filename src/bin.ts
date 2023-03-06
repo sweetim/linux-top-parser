@@ -53,4 +53,4 @@ process.stdin
         summary,
         filter
     }))
-    .pipe(process.stdout)
+    .on("data", console.log)
