@@ -46,7 +46,7 @@ type CLIOptions = {
 }
 
 const { prettify, summary, filter, timeOut_ms } = program.opts<CLIOptions>()
-console.log(program.opts())
+
 process.stdin
     .pipe(topInfoTransform({
         stringify: {
