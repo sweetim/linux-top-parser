@@ -32,6 +32,7 @@ program
     .version(packageJson.version || "")
     .description("parser for linux top command")
     .addHelpText("after", HELPER_TEXT)
+    .option("-t, --timeOut_ms <TIMEOUT_MS>", "the maximum amount of time (in milliseconds) to wait for the next header before emitting data", "100")
     .option("-s, --summary", "output summary display only", false)
     .option("-p, --prettify", "output top info with indentation and color", false)
     .option("-f, --filter", "output process that has > 0% of CPU usage only", false)
@@ -41,9 +42,10 @@ type CLIOptions = {
     prettify: boolean
     summary: boolean
     filter: boolean
+    timeOut_ms: number
 }
 
-const { prettify, summary, filter } = program.opts<CLIOptions>()
+const { prettify, summary, filter, timeOut_ms } = program.opts<CLIOptions>()
 
 process.stdin
     .pipe(topInfoTransform({
@@ -51,6 +53,7 @@ process.stdin
             prettify
         },
         summary,
-        filter
+        filter,
+        timeOut_ms: Number(timeOut_ms)
     }))
-    .pipe(process.stdout)
+    .on("data", console.log)

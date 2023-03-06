@@ -1,0 +1,6 @@
+{
+    "sonarlint.connectedMode.project": {
+        "connectionId": "sweetim-github",
+        "projectKey": "sweetim_linux-top-parser"
+    }
+}

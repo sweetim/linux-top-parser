@@ -18,7 +18,7 @@ import {
 import { fromDays, fromHours, fromMinutes } from "./util"
 
 export function parseUpTime_s(input: string): number {
-    const matcher = /(?:(\d+)\s\bday[s]?,\s)?(?:(\d+:\d+)|(\d+)\smin)/gm
+    const matcher = /(?:(\d+)\s\bdays?,\s)?(?:(\d+:\d+)|(\d+)\smin)/gm
     const tokens = Array.from(input.matchAll(matcher)).flat()
 
     if (tokens.length === 0) {
@@ -40,7 +40,7 @@ export function parseUpTime_s(input: string): number {
 }
 
 export function parseUpTimeAndLoadAverage(line: string): UpTimeAndLoadAverage {
-    const matcher = /top - ([\d:]+) up (.+(?=,\s+\d \buser)),\s+(\d) \buser[s]?,\s+load average:(\s[\d.]+),(\s[\d.]+),(\s[\d.]+,?)/gm
+    const matcher = /top - ([\d:]+) up (.+(?=,\s+\d \buser)),\s+(\d) \busers?,\s+load average:(\s[\d.]+),(\s[\d.]+),(\s[\d.]+,?)/gm
     const tokens = Array.from(line.matchAll(matcher)).flat()
 
     if (tokens.length === 0) {
@@ -75,7 +75,7 @@ export function parseTaskStates(str: string): TaskStates {
 }
 
 export function parseCpuStates(line: string): CpuStates[] {
-    const matcher = /^%Cpu([\d]+|\b\(s\))\s*:\s*(\d+.\d+)\sus,\s*(\d+.\d+)\ssy,\s*(\d+.\d+)\sni,\s*(\d+.\d+)\sid,\s*(\d+.\d+)\swa,\s*(\d+.\d+)\shi,\s*(\d+.\d+)\ssi,\s*(\d+.\d+)\sst/gm
+    const matcher = /^%Cpu(\d+|\b\(s\))\s*:\s*(\d+.\d+)\sus,\s*(\d+.\d+)\ssy,\s*(\d+.\d+)\sni,\s*(\d+.\d+)\sid,\s*(\d+.\d+)\swa,\s*(\d+.\d+)\shi,\s*(\d+.\d+)\ssi,\s*(\d+.\d+)\sst/gm
     const tokens = Array.from(line.matchAll(matcher))
 
     if (tokens.length === 0) {
