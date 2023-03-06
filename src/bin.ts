@@ -32,6 +32,7 @@ program
     .version(packageJson.version || "")
     .description("parser for linux top command")
     .addHelpText("after", HELPER_TEXT)
+    .option("-t, --timeOut_ms <TIMEOUT_MS>", "specify the timeout value to emit the buffer", "100")
     .option("-s, --summary", "output summary display only", false)
     .option("-p, --prettify", "output top info with indentation and color", false)
     .option("-f, --filter", "output process that has > 0% of CPU usage only", false)
@@ -41,16 +42,18 @@ type CLIOptions = {
     prettify: boolean
     summary: boolean
     filter: boolean
+    timeOut_ms: number
 }
 
-const { prettify, summary, filter } = program.opts<CLIOptions>()
-
+const { prettify, summary, filter, timeOut_ms } = program.opts<CLIOptions>()
+console.log(program.opts())
 process.stdin
     .pipe(topInfoTransform({
         stringify: {
             prettify
         },
         summary,
-        filter
+        filter,
+        timeOut_ms: Number(timeOut_ms)
     }))
     .on("data", console.log)
