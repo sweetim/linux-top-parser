@@ -83,7 +83,7 @@ Usage: linux-top-parser [options]
 
 Options:
   -V, --version                  output the version number
-  -t, --timeOut_ms <TIMEOUT_MS>  specify the timeout value to emit the buffer (default: "100")
+  -t, --timeOut_ms <TIMEOUT_MS>  the maximum amount of time (in milliseconds) to wait for the next header before emitting data (default: "100")
   -s, --summary                  output summary display only (default: false)
   -p, --prettify                 output top info with indentation and color (default: false)
   -f, --filter                   output process that has > 0% of CPU usage only (default: false)

@@ -32,7 +32,7 @@ program
     .version(packageJson.version || "")
     .description("parser for linux top command")
     .addHelpText("after", HELPER_TEXT)
-    .option("-t, --timeOut_ms <TIMEOUT_MS>", "specify the timeout value to emit the buffer", "100")
+    .option("-t, --timeOut_ms <TIMEOUT_MS>", "the maximum amount of time (in milliseconds) to wait for the next header before emitting data", "100")
     .option("-s, --summary", "output summary display only", false)
     .option("-p, --prettify", "output top info with indentation and color", false)
     .option("-f, --filter", "output process that has > 0% of CPU usage only", false)

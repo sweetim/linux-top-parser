@@ -125,6 +125,7 @@ export function topInfoTransform(options?: TopInfoTransformOptions): Transform {
  * Buffers data chunks until a header is found and then applies a mapping function to the buffer.
  * @param {RegExp} header - The regular expression that matches the header of a new chunk.
  * @param {(buffer: string) => any} [mappingFn] - The function that transforms the buffer into a desired format. By default, it returns the buffer as it is.
+ * @param {number} timeOut_ms - The maximum amount of time (in milliseconds) to wait for the next header before emitting data. Optional.
  * @returns {Transform} A transform stream that buffers and maps data chunks based on the header.
  */
 export function bufferTillNextHeader(
