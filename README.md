@@ -79,14 +79,15 @@ top -b | npx linux-top-parser | jq ".[0].summaryDisplay"
 ### Usage
 
 ```
-linux-top-parser [options]
+Usage: linux-top-parser [options]
 
 Options:
-  -V, --version   output the version number
-  -s, --summary   output summary display only (default: false)
-  -p, --prettify  output top info with indentation and color (default: false)
-  -f, --filter    output process that has > 0% of CPU usage only (default: false)
-  -h, --help      display help for command
+  -V, --version                  output the version number
+  -t, --timeOut_ms <TIMEOUT_MS>  specify the timeout value to emit the buffer (default: "100")
+  -s, --summary                  output summary display only (default: false)
+  -p, --prettify                 output top info with indentation and color (default: false)
+  -f, --filter                   output process that has > 0% of CPU usage only (default: false)
+  -h, --help                     display help for command
 ```
 
 ### Reference
