@@ -9,6 +9,7 @@ export interface TopInfoTransformOptions {
     stringify?: boolean | TopInfoTransformToStringOpions
     summary?: boolean
     filter?: boolean
+    timeOut_ms?: number
 }
 
 interface TopInfoTransformToStringOpions {
@@ -20,6 +21,7 @@ export interface TopInfoTransformConfig {
     isPrettify: boolean
     isSummary: boolean
     isFilter: boolean
+    timeOut_ms: number
 }
 
 export function parseTopInfoTransformOptions(options?: TopInfoTransformOptions): TopInfoTransformConfig {
@@ -28,6 +30,7 @@ export function parseTopInfoTransformOptions(options?: TopInfoTransformOptions):
         isPrettify: false,
         isSummary: false,
         isFilter: false,
+        timeOut_ms: 100
     }
 
     if (options === undefined) {
@@ -57,6 +60,10 @@ export function parseTopInfoTransformOptions(options?: TopInfoTransformOptions):
 
     if (options.filter) {
         output.isFilter = options.filter
+    }
+
+    if (options.timeOut_ms) {
+        output.timeOut_ms = options.timeOut_ms
     }
 
     return output
@@ -109,7 +116,8 @@ export function topInfoTransform(options?: TopInfoTransformOptions): Transform {
 
     return bufferTillNextHeader(
         /(?=^top)/gm,
-        topInfoMapping(config)
+        topInfoMapping(config),
+        config.timeOut_ms
     )
 }
 
@@ -122,9 +130,11 @@ export function topInfoTransform(options?: TopInfoTransformOptions): Transform {
 export function bufferTillNextHeader(
     header: RegExp,
     /* eslint-disable @typescript-eslint/no-explicit-any */
-    mappingFn: (buffer: string) => any = (buffer: string) => buffer): Transform
+    mappingFn: (buffer: string) => any = (buffer: string) => buffer,
+    timeOut_ms?: number): Transform
 {
     let buffer = ""
+    let timeOut_id: NodeJS.Timeout | null = null
 
     return new Transform({
         objectMode: true,
@@ -139,8 +149,10 @@ export function bufferTillNextHeader(
                     const isHeader = header.test(msg)
 
                     if (buffer && isHeader) {
-                        this.push(mappingFn(buffer))
-                        buffer = ""
+                        if (buffer.trim().length > 0) {
+                            this.push(mappingFn(buffer))
+                            buffer = ""
+                        }
                     }
 
                     if (isHeader) {
@@ -151,6 +163,20 @@ export function bufferTillNextHeader(
 
                     buffer += msg
                 })
+
+            if (timeOut_id) {
+                clearTimeout(timeOut_id)
+                timeOut_id = null
+            }
+
+            if (timeOut_ms) {
+                timeOut_id = setTimeout(() => {
+                    if (buffer.trim().length > 0) {
+                        this.push(mappingFn(buffer))
+                        buffer = ""
+                    }
+                }, timeOut_ms)
+            }
 
             cb()
         },

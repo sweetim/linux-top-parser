@@ -19,7 +19,8 @@ describe("parseTopInfoTransformOptions", () => {
             isStringify: false,
             isPrettify: false,
             isSummary: false,
-            isFilter: false
+            isFilter: false,
+            timeOut_ms: 100
         }
 
         expect(parseTopInfoTransformOptions()).toStrictEqual(expected)
@@ -35,7 +36,8 @@ describe("parseTopInfoTransformOptions", () => {
             isStringify: false,
             isPrettify: false,
             isSummary: false,
-            isFilter: false
+            isFilter: false,
+            timeOut_ms: 100
         }
 
         expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
@@ -53,7 +55,8 @@ describe("parseTopInfoTransformOptions", () => {
             isStringify: true,
             isPrettify: false,
             isSummary: false,
-            isFilter: false
+            isFilter: false,
+            timeOut_ms: 100
         }
 
         expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
@@ -70,7 +73,8 @@ describe("parseTopInfoTransformOptions", () => {
             isStringify: true,
             isPrettify: true,
             isSummary: false,
-            isFilter: false
+            isFilter: false,
+            timeOut_ms: 100
         }
 
         expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
@@ -90,7 +94,8 @@ describe("parseTopInfoTransformOptions", () => {
             isStringify: true,
             isPrettify: false,
             isSummary: false,
-            isFilter: false
+            isFilter: false,
+            timeOut_ms: 100
         }
 
         expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
@@ -108,7 +113,8 @@ describe("parseTopInfoTransformOptions", () => {
             isStringify: false,
             isPrettify: false,
             isSummary: summary,
-            isFilter: false
+            isFilter: false,
+            timeOut_ms: 100
         }
 
         expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
@@ -126,7 +132,24 @@ describe("parseTopInfoTransformOptions", () => {
             isStringify: false,
             isPrettify: false,
             isSummary: false,
-            isFilter: filter
+            isFilter: filter,
+            timeOut_ms: 100
+        }
+
+        expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
+    })
+
+    it("should return timeOut_ms value", () => {
+        const input: TopInfoTransformOptions = {
+            timeOut_ms: 200
+        }
+
+        const expected: TopInfoTransformConfig = {
+            isStringify: false,
+            isPrettify: false,
+            isSummary: false,
+            isFilter: false,
+            timeOut_ms: 200
         }
 
         expect(parseTopInfoTransformOptions(input)).toStrictEqual(expected)
