@@ -83,9 +83,9 @@ jobs:
 
       - uses: docker/setup-buildx-action@v2.5.0
       - name: publish docker image
-          uses: docker/build-push-action@v4
-          with:
-            context: .
-            file: ./Dockerfile
-            push: true
-            tags: ${{ env.GITHUB_REGISTRY }}/sweetim/linux-top-parser:${{ steps.get_latest_git_tag.outputs.latest_git_tag }}
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ env.GITHUB_REGISTRY }}/sweetim/linux-top-parser:${{ steps.get_latest_git_tag.outputs.latest_git_tag }}
