@@ -52,6 +52,25 @@ jobs:
         name: code-coverage-report
         path: coverage/**
 
+  build-docker:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+    - uses: actions/checkout@v3
+    - name: lint dockerfile
+      uses: luke142367/Docker-Lint-Action@v1.0.0
+      with:
+        target: Dockerfile
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: docker/setup-buildx-action@v2.5.0
+    - name: build docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/linux-top-parser:latest
+
   code-analysis:
     runs-on: ubuntu-latest
     needs: build
