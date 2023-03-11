@@ -14,7 +14,7 @@ RUN addgroup -S user \
 WORKDIR /app
 COPY --from=builder /app/package.json /app/LICENSE ./
 COPY --from=builder /app/lib  ./lib
-RUN npm install
+RUN npm install --production
 
 USER user
 
