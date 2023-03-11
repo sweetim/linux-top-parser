@@ -2,7 +2,7 @@ FROM node:18-alpine as builder
 
 WORKDIR /app
 COPY ./src ./src
-COPY package.json LICENSE .
+COPY package.json LICENSE ./
 RUN npm ci
 RUN npm run build
 
