@@ -61,8 +61,8 @@ createReadStream(TOP_FILE_PATH)
 ### Examples
 
 There are 2 code examples shown in the [example](https://github.com/sweetim/linux-top-parser/tree/master/example) folder on how to use this package
--  [read from file](https://github.com/sweetim/linux-top-parser/blob/master/example/read-from-file.ts)
--  [stream from the linux `top` command output](https://github.com/sweetim/linux-top-parser/blob/master/example/stream-from-top-command.ts)
+-   [read from file](https://github.com/sweetim/linux-top-parser/blob/master/example/read-from-file.ts)
+-   [stream from the linux `top` command output](https://github.com/sweetim/linux-top-parser/blob/master/example/stream-from-top-command.ts)
 
 ## CLI
 
@@ -79,15 +79,16 @@ top -b | npx linux-top-parser | jq ".[0].summaryDisplay"
 ### Usage
 
 ```
-linux-top-parser [options]
+Usage: linux-top-parser [options]
 
 Options:
-  -V, --version   output the version number
-  -s, --summary   output summary display only (default: false)
-  -p, --prettify  output top info with indentation and color (default: false)
-  -f, --filter    output process that has > 0% of CPU usage only (default: false)
-  -h, --help      display help for command
+  -V, --version                  output the version number
+  -t, --timeOut_ms <TIMEOUT_MS>  the maximum amount of time (in milliseconds) to wait for the next header before emitting data (default: "100")
+  -s, --summary                  output summary display only (default: false)
+  -p, --prettify                 output top info with indentation and color (default: false)
+  -f, --filter                   output process that has > 0% of CPU usage only (default: false)
+  -h, --help                     display help for command
 ```
 
 ### Reference
--  https://man7.org/linux/man-pages/man1/top.1.html
+-   https://man7.org/linux/man-pages/man1/top.1.html
